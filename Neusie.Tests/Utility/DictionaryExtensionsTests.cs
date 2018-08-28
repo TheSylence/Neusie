@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Neusie.Utility;
 using NUnit.Framework;
 
-namespace Neusie.Tests
+namespace Neusie.Tests.Utility
 {
 	[TestFixture]
 	internal class DictionaryExtensionsTests

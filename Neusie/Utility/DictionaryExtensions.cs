@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Neusie
+namespace Neusie.Utility
 {
 	internal static class DictionaryExtensions
 	{

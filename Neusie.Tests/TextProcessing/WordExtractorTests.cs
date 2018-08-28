@@ -163,6 +163,25 @@ namespace Neusie.Tests.TextProcessing
 			}
 
 			[Test]
+			public void ShouldNotContainSpecialCharactersInWords()
+			{
+				// Arrange
+				var input = "#region !not nullable?";
+				var expected = new Dictionary<string, int>
+				{
+					{"region", 1}, {"not", 1}, {"nullable", 1}
+				};
+
+				var sut = new WordExtractor();
+
+				// Act
+				var actual = sut.ExtractWithoutProcessing( input );
+
+				// Assert
+				CollectionAssert.AreEquivalent( expected, actual );
+			}
+
+			[Test]
 			[TestCase( "12312 1231" )]
 			[TestCase( "__-- _###'" )]
 			public void ShouldRemoveDigitOnlyWords( string input )

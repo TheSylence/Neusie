@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Neusie.TextProcessing;
+using Neusie.Utility;
 using NUnit.Framework;
 
-namespace Neusie.Tests.TextProcessing
+namespace Neusie.Tests.Utility
 {
 	[TestFixture]
 	internal class FileReaderTests
@@ -28,6 +28,19 @@ namespace Neusie.Tests.TextProcessing
 			}
 
 			[Test]
+			public void ShouldReturnNullWhenFileDoesNotExist()
+			{
+				// Arrange
+				var sut = new FileReader();
+
+				// Act
+				var actual = sut.Read( "non.existing.file" );
+
+				// Assert
+				Assert.IsNull( actual );
+			}
+
+			[Test]
 			public void ShouldThrowWhenArgumentIsNull()
 			{
 				// Arrange
@@ -38,19 +51,6 @@ namespace Neusie.Tests.TextProcessing
 
 				// Assert
 				Assert.Throws<ArgumentNullException>( action );
-			}
-
-			[Test]
-			public void ShouldThrowWhenFileDoesNotExist()
-			{
-				// Arrange
-				var sut = new FileReader();
-
-				// Act
-				TestDelegate action = () => sut.Read( "non.existing.file" );
-
-				// Assert
-				Assert.Throws<FileNotFoundException>( action );
 			}
 		}
 	}

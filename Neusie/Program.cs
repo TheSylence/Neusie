@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Neusie.Generation;
 using Neusie.Parsing;
 using Neusie.TextProcessing;
+using Neusie.Utility;
 
 [assembly: InternalsVisibleTo( "Neusie.Tests" )]
 [assembly: InternalsVisibleTo( "DynamicProxyGenAssembly2" )]
@@ -26,8 +27,7 @@ namespace Neusie
 				new LineEndingNormalizer(),
 				new CommentRemover(),
 				new StringRemover(),
-				new NamespaceCleaner(),
-				new SymbolExpander()
+				new NamespaceCleaner()
 			};
 
 			var postProcessors = new ITextPostProcessor[]

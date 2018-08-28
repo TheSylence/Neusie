@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace Neusie.TextProcessing
+namespace Neusie.Utility
 {
-	internal class FileReader
+	internal class FileReader : IFileReader
 	{
 		public string Read( string fileName )
 		{
@@ -14,7 +14,7 @@ namespace Neusie.TextProcessing
 
 			if( !File.Exists( fileName ) )
 			{
-				throw new FileNotFoundException();
+				return null;
 			}
 
 			return File.ReadAllText( fileName );
