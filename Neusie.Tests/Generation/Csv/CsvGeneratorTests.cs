@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Neusie.Generation;
+using Neusie.Generation.Csv;
 using NUnit.Framework;
 
-namespace Neusie.Tests.Generation
+namespace Neusie.Tests.Generation.Csv
 {
 	[TestFixture]
 	internal class CsvGeneratorTests

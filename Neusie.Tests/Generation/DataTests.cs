@@ -23,7 +23,7 @@ namespace Neusie.Tests.Generation
 				Assert.AreEqual( "fileName.ext", actual );
 			}
 
-			private class TestData : Data
+			private class TestData : BaseData
 			{
 				/// <inheritdoc />
 				public TestData( string extension ) : base( extension )

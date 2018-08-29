@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using Neusie.Generation;
+using Neusie.Generation.Csv;
 using NUnit.Framework;
 
-namespace Neusie.Tests.Generation
+namespace Neusie.Tests.Generation.Csv
 {
 	[TestFixture]
-	internal class StringDataTests
+	internal class CsvDataTests
 	{
 		[TestFixture]
 		internal class Save
@@ -17,7 +17,7 @@ namespace Neusie.Tests.Generation
 				const string baseName = "fileName";
 				string fileName = "fileName.ext";
 				var expected = "hello world";
-				var sut = new StringData( expected, "ext" );
+				var sut = new CsvData( expected, "ext" );
 
 				// Act
 				sut.Save( baseName );
@@ -36,7 +36,7 @@ namespace Neusie.Tests.Generation
 			{
 				// Arrange
 				var expected = "hello world";
-				var sut = new StringData( expected, "ext" );
+				var sut = new CsvData( expected, "ext" );
 
 				// Act
 				var actual = sut.ToString();

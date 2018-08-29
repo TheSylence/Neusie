@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Neusie.Generation;
+using Neusie.Generation.Csv;
 using Neusie.Parsing;
 using Neusie.TextProcessing;
 using Neusie.Utility;

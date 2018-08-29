@@ -1,11 +1,11 @@
 ﻿using System.IO;
 
-namespace Neusie.Generation
+namespace Neusie.Generation.Csv
 {
-	internal class StringData : Data
+	internal class CsvData : BaseData
 	{
 		/// <inheritdoc />
-		public StringData( string content, string extension ) : base( extension )
+		public CsvData( string content, string extension ) : base( extension )
 		{
 			Content = content;
 		}

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Neusie.Generation
+namespace Neusie.Generation.Csv
 {
 	internal class CsvGenerator : IGenerator
 	{
@@ -16,7 +16,7 @@ namespace Neusie.Generation
 				sb.AppendLine( $"{kvp.Key};{kvp.Value}" );
 			}
 
-			return new StringData( sb.ToString(), ".csv" );
+			return new CsvData( sb.ToString(), ".csv" );
 		}
 	}
 }

@@ -2,9 +2,9 @@
 
 namespace Neusie.Generation
 {
-	internal abstract class Data : IData
+	internal abstract class BaseData : IData
 	{
-		protected Data( string extension )
+		protected BaseData( string extension )
 		{
 			Extension = extension;
 		}
