@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Drawing;
 using Neusie.Generation.Image;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
-	[TestFixture]
-	internal class ImageDataTests
+	public class ImageDataTests
 	{
-		[TestFixture]
-		internal class Save
+		public class Save
 		{
-			[Test]
+			[Fact]
 			public void ShouldCreateImageWithCorrectContent()
 			{
 				// Arrange
@@ -40,12 +38,12 @@ namespace Neusie.Tests.Generation.Image
 					using( var gdiBitmap = System.Drawing.Image.FromFile( fileName ) )
 					{
 						IEqualityComparer comp = new ImageComparer();
-						Assert.IsTrue( comp.Equals( referenceImage, gdiBitmap ) );
+						Assert.True( comp.Equals( referenceImage, gdiBitmap ) );
 					}
 				}
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCreateImageWithCorrectSizes()
 			{
 				// Arrange
@@ -63,8 +61,8 @@ namespace Neusie.Tests.Generation.Image
 				// Assert
 				using( var gdiBitmap = System.Drawing.Image.FromFile( fileName ) )
 				{
-					Assert.AreEqual( 32, gdiBitmap.Width );
-					Assert.AreEqual( 16, gdiBitmap.Height );
+					Assert.Equal( 32, gdiBitmap.Width );
+					Assert.Equal( 16, gdiBitmap.Height );
 				}
 			}
 		}

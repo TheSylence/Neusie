@@ -1,16 +1,14 @@
 ﻿using System.IO;
 using Neusie.Generation.Csv;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation.Csv
 {
-	[TestFixture]
-	internal class CsvDataTests
+	public class CsvDataTests
 	{
-		[TestFixture]
-		internal class Save
+		public class Save
 		{
-			[Test]
+			[Fact]
 			public void ShouldWriteContentToFile()
 			{
 				// Arrange
@@ -24,14 +22,13 @@ namespace Neusie.Tests.Generation.Csv
 
 				// Assert
 				var actual = File.ReadAllText( fileName );
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 		}
 
-		[TestFixture]
-		internal new class ToString
+		public new class ToString
 		{
-			[Test]
+			[Fact]
 			public void ShouldContainStringData()
 			{
 				// Arrange
@@ -42,7 +39,7 @@ namespace Neusie.Tests.Generation.Csv
 				var actual = sut.ToString();
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 		}
 	}

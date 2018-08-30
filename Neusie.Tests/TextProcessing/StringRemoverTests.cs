@@ -1,17 +1,15 @@
 ﻿using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class StringRemoverTests
+	public class StringRemoverTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
-			[TestCase( "Hello \"world\"!", "Hello !" )]
-			[TestCase("var x = @\"test\";", "var x = ;")]
+			[Theory]
+			[InlineData( "Hello \"world\"!", "Hello !" )]
+			[InlineData( "var x = @\"test\";", "var x = ;" )]
 			public void ShouldOnlyRemoveStrings( string input, string expected )
 			{
 				// Arrange
@@ -21,10 +19,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveStringValue()
 			{
 				// Arrange
@@ -36,10 +34,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveVerbatimStringValue()
 			{
 				// Arrange
@@ -51,7 +49,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 		}
 	}

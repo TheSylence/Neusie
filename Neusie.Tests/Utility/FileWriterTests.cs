@@ -1,29 +1,28 @@
 ﻿using System;
 using System.IO;
 using Neusie.Utility;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Utility
 {
-	[TestFixture]
-	internal class FileWriterTests
+	public class FileWriterTests
 	{
 		public class Write
 		{
-			[Test]
+			[Fact]
 			public void ShouldThrowWhenArgumentIsNull()
 			{
 				// Arrange
 				var sut = new FileWriter();
 
 				// Act
-				TestDelegate action = () => sut.Write( null, "content" );
+				Action action = () => sut.Write( null, "content" );
 
 				// Assert
 				Assert.Throws<ArgumentNullException>( action );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldWriteContentToFile()
 			{
 				// Arrange
@@ -36,10 +35,10 @@ namespace Neusie.Tests.Utility
 
 				// Assert
 				var actual = File.ReadAllText( fileName );
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldWriteEmptyFileWhenContentIsNull()
 			{
 				// Arrange
@@ -51,7 +50,7 @@ namespace Neusie.Tests.Utility
 
 				// Assert
 				var actual = File.ReadAllText( fileName );
-				Assert.IsTrue( string.IsNullOrEmpty( actual ) );
+				Assert.True( string.IsNullOrEmpty( actual ) );
 			}
 		}
 	}

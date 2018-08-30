@@ -1,30 +1,28 @@
 ﻿using Neusie.Parsing;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
-	[TestFixture]
-	internal class FolderParserTests
+	public class FolderParserTests
 	{
-		[TestFixture]
-		internal class ReadFiles
+		public class ReadFiles
 		{
-			[Test]
+			[Fact]
 			public void ShouldContainAllFoldersInRootFolder()
 			{
 				// Arrange
 				var enumerator = Substitute.For<IDirectoryEnumerator>();
-				var expected = new[] { "1.cs", "2.cs" };
-				enumerator.Files("root", "*.cs", true).Returns(expected);
+				var expected = new[] {"1.cs", "2.cs"};
+				enumerator.Files( "root", "*.cs", true ).Returns( expected );
 
-				var sut = new FolderParser(enumerator);
+				var sut = new FolderParser( enumerator );
 
 				// Act
-				var actual = sut.Files("root");
+				var actual = sut.Files( "root" );
 
 				// Assert
-				CollectionAssert.AreEquivalent(expected, actual);
+				Assert.Equal( expected, actual );
 			}
 		}
 	}

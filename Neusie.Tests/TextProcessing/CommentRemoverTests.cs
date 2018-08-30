@@ -1,16 +1,14 @@
 ﻿using System;
 using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class CommentRemoverTests
+	public class CommentRemoverTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
+			[Fact]
 			public void ShouldNotTouchNormalText()
 			{
 				// Arrange
@@ -21,10 +19,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldOnlyRemoveSingleLineForSingleLineComment()
 			{
 				// Arrange
@@ -35,10 +33,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveBlockCommentFromBeginning()
 			{
 				// Arrange
@@ -49,10 +47,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveBlockCommentFromEnd()
 			{
 				// Arrange
@@ -63,10 +61,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveBlockCommentFromMiddle()
 			{
 				// Arrange
@@ -77,10 +75,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveMultiLineComment()
 			{
 				// Arrange
@@ -91,10 +89,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveSingleLineComment()
 			{
 				// Arrange
@@ -105,10 +103,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveSingleLineCommentAtFileEnd()
 			{
 				// Arrange
@@ -119,10 +117,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldSingleLineCommentFromEnd()
 			{
 				// Arrange
@@ -133,7 +131,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
 			private string Execute( string input )

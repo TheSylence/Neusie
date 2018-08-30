@@ -1,30 +1,14 @@
 ﻿using System;
 using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class LineEndingNormalizerTests
+	public class LineEndingNormalizerTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
-			public void ShouldNormalizeLineEndings()
-			{
-				// Arrange
-				var input = "1\r2\n3\r\n4";
-				var expected = "1" + Environment.NewLine + "2" + Environment.NewLine + "3" + Environment.NewLine + "4";
-
-				// Act
-				var actual = Execute( input );
-
-				// Assert
-				Assert.AreEqual( expected, actual );
-			}
-
-			[Test]
+			[Fact]
 			public void ShouldKeepWindowsLineEnding()
 			{
 				// Arrange
@@ -35,10 +19,24 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
+			public void ShouldNormalizeLineEndings()
+			{
+				// Arrange
+				var input = "1\r2\n3\r\n4";
+				var expected = "1" + Environment.NewLine + "2" + Environment.NewLine + "3" + Environment.NewLine + "4";
+
+				// Act
+				var actual = Execute( input );
+
+				// Assert
+				Assert.Equal( expected, actual );
+			}
+
+			[Fact]
 			public void ShouldReplaceMacLineEnding()
 			{
 				// Arrange
@@ -49,10 +47,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReplaceUnixLineEnding()
 			{
 				// Arrange
@@ -63,7 +61,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = Execute( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
 			private string Execute( string input )

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Neusie.Generation.Csv;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation.Csv
 {
-	[TestFixture]
-	internal class CsvGeneratorTests
+	public class CsvGeneratorTests
 	{
-		[TestFixture]
-		internal class Generate
+		public class Generate
 		{
-			[Test]
+			[Fact]
 			public void ShouldBeEmptyWhenWordsAreEmpty()
 			{
 				// Arrange
@@ -23,10 +21,10 @@ namespace Neusie.Tests.Generation.Csv
 
 				// Assert
 				var expected = "Word;Count" + Environment.NewLine;
-				Assert.AreEqual( expected, actual.ToString() );
+				Assert.Equal( expected, actual.ToString() );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainWordsInCorrectOrder()
 			{
 				// Arrange
@@ -46,7 +44,7 @@ namespace Neusie.Tests.Generation.Csv
 				               "three;3" + Environment.NewLine +
 				               "two;2" + Environment.NewLine +
 				               "one;1" + Environment.NewLine;
-				Assert.AreEqual( expected, actual.ToString() );
+				Assert.Equal( expected, actual.ToString() );
 			}
 		}
 	}

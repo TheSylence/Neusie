@@ -2,17 +2,15 @@
 using System.Linq;
 using Neusie.TextProcessing;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class WordExtractorTests
+	public class WordExtractorTests
 	{
-		[TestFixture]
-		internal class Extract
+		public class Extract
 		{
-			[Test]
+			[Fact]
 			public void ShouldApplyPostProcessorsInCorrectOrder()
 			{
 				// Arrange
@@ -30,13 +28,13 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Extract( "hello world" );
 
 				// Assert
-				Assert.AreSame( d2, actual );
+				Assert.Same( d2, actual );
 
 				p1.Received( 1 ).Process( Arg.Any<Dictionary<string, int>>() );
 				p2.Received( 1 ).Process( d1 );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldApplyProcessorsInCorrectOrder()
 			{
 				// Arrange
@@ -55,7 +53,7 @@ namespace Neusie.Tests.TextProcessing
 				p2.Received( 1 ).Process( "one" );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCallPostProcessors()
 			{
 				// Arrange
@@ -71,7 +69,7 @@ namespace Neusie.Tests.TextProcessing
 				p2.Received().Process( Arg.Any<Dictionary<string, int>>() );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCallPreProcessors()
 			{
 				// Arrange
@@ -87,7 +85,7 @@ namespace Neusie.Tests.TextProcessing
 				p2.Received().Process( Arg.Any<string>() );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnEmptyDictionaryWhenInputIsEmpty()
 			{
 				// Arrange
@@ -98,14 +96,13 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Extract( input );
 
 				// Assert
-				CollectionAssert.IsEmpty( actual );
+				Assert.Empty( actual );
 			}
 		}
 
-		[TestFixture]
-		internal class ExtractWithoutProcessing
+		public class ExtractWithoutProcessing
 		{
-			[Test]
+			[Fact]
 			public void ShouldContainAllWordsFromInput()
 			{
 				// Arrange
@@ -121,10 +118,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainWordsWithCorrectFrequency()
 			{
 				// Arrange
@@ -140,10 +137,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainWordsWithCorrectFrequencyIgnoringCase()
 			{
 				// Arrange
@@ -159,10 +156,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldNotContainSpecialCharactersInWords()
 			{
 				// Arrange
@@ -178,12 +175,12 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
-			[TestCase( "12312 1231" )]
-			[TestCase( "__-- _###'" )]
+			[Theory]
+			[InlineData( "12312 1231" )]
+			[InlineData( "__-- _###'" )]
 			public void ShouldRemoveDigitOnlyWords( string input )
 			{
 				// Arrange
@@ -193,10 +190,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( input );
 
 				// Assert
-				CollectionAssert.IsEmpty( actual );
+				Assert.Empty( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnEmptyDictionaryWhenInputIsEmpty()
 			{
 				// Arrange
@@ -206,7 +203,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.ExtractWithoutProcessing( string.Empty );
 
 				// Assert
-				CollectionAssert.IsEmpty( actual );
+				Assert.Empty( actual );
 			}
 		}
 	}

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.IO;
 using Neusie.Utility;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Utility
 {
-	[TestFixture]
-	internal class FileReaderTests
+	public class FileReaderTests
 	{
 		public class Read
 		{
-			[Test]
+			[Fact]
 			public void ShouldReturnFileContents()
 			{
 				// Arrange
@@ -24,10 +23,10 @@ namespace Neusie.Tests.Utility
 				var actual = sut.Read( fileName );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnNullWhenFileDoesNotExist()
 			{
 				// Arrange
@@ -37,17 +36,17 @@ namespace Neusie.Tests.Utility
 				var actual = sut.Read( "non.existing.file" );
 
 				// Assert
-				Assert.IsNull( actual );
+				Assert.Null( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldThrowWhenArgumentIsNull()
 			{
 				// Arrange
 				var sut = new FileReader();
 
 				// Act
-				TestDelegate action = () => sut.Read( null );
+				Action action = () => sut.Read( null );
 
 				// Assert
 				Assert.Throws<ArgumentNullException>( action );

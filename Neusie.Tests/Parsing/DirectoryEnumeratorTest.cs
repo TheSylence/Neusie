@@ -1,17 +1,16 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Neusie.Parsing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
-	[TestFixture]
-	internal class DirectoryEnumeratorTest
+	public class DirectoryEnumeratorTest
 	{
-		[TestFixture]
-		internal class Files
+		public class Files
 		{
-			[Test]
+			[Fact]
 			public void ShouldContainAllFilesOfNestedFolders()
 			{
 				// Arrange
@@ -19,17 +18,17 @@ namespace Neusie.Tests.Parsing
 				var sut = new DirectoryEnumerator();
 
 				// Act
-				var actual = sut.Files( dir, "*.*", true );
+				var actual = sut.Files( dir, "*.*", true ).OrderBy( x => x ).ToList();
 
 				// Assert
 				var expected = new[] {"a.txt", Path.Combine( "sub", "b.txt" ), Path.Combine( "sub2", "c.txt" ), "d.ext"}
-					.Select( x => Path.Combine( dir, x ) ).ToList();
-				CollectionAssert.AreEquivalent( expected, actual );
+					.Select( x => Path.Combine( dir, x ) ).OrderBy( x => x ).ToList();
+				Assert.Equal( expected, actual );
 
 				RemoveDirectory( dir );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainAllFilesOfRoot()
 			{
 				// Arrange
@@ -41,12 +40,12 @@ namespace Neusie.Tests.Parsing
 
 				// Assert
 				var expected = new[] {"a.txt", "d.ext"}.Select( x => Path.Combine( dir, x ) ).ToList();
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 
 				RemoveDirectory( dir );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldNotContainFilesOfNestedFolderWhenRecursiveIsFalse()
 			{
 				// Arrange
@@ -54,16 +53,20 @@ namespace Neusie.Tests.Parsing
 				var sut = new DirectoryEnumerator();
 
 				// Act
-				var actual = sut.Files( dir, "*.*", false );
+				var actual = sut.Files( dir, "*.*", false ).ToList();
 
 				// Assert
 				var notExpected = new[] {Path.Combine( "sub", "b.txt" ), Path.Combine( "sub2", "c.txt" )}.Select( x => Path.Combine( dir, x ) ).ToList();
-				CollectionAssert.IsNotSubsetOf( notExpected, actual );
+
+				foreach( var x in notExpected )
+				{
+					Assert.DoesNotContain( x, actual );
+				}
 
 				RemoveDirectory( dir );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldOnlyContainFilesMatchingPattern()
 			{
 				// Arrange
@@ -75,20 +78,14 @@ namespace Neusie.Tests.Parsing
 
 				// Assert
 				var expected = new[] {"d.ext"}.Select( x => Path.Combine( dir, x ) ).ToList();
-				CollectionAssert.AreEquivalent( expected, actual );
+				Assert.Equal( expected, actual );
 
 				RemoveDirectory( dir );
 			}
 
-			private string CreateDirectory( string name = null )
+			private string CreateDirectory( [CallerMemberName] string name = null )
 			{
-				var dirName = TestContext.CurrentContext.Test.ClassName + "_" + TestContext.CurrentContext.Test.MethodName;
-				if( name != null )
-				{
-					dirName += "_" + name;
-				}
-
-				var path = Path.Combine( TestContext.CurrentContext.WorkDirectory, dirName );
+				var path = "DirectoryEnumeratorTest_" + name;
 
 				Directory.CreateDirectory( path );
 

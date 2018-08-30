@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class ShortWordRemoverTests
+	public class ShortWordRemoverTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
+			[Fact]
 			public void ShouldNotTouchLongWords()
 			{
 				// Arrange
@@ -27,10 +25,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( input, actual );
+				Assert.Equal( input, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveAllWordsShorterThanThreshold()
 			{
 				// Arrange
@@ -47,9 +45,9 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				CollectionAssert.Contains( actual.Keys, "four" );
-				CollectionAssert.Contains( actual.Keys, "verylongword" );
-				CollectionAssert.DoesNotContain( actual.Keys, "one" );
+				Assert.Contains( "four", actual.Keys );
+				Assert.Contains( "verylongword", actual.Keys );
+				Assert.DoesNotContain( "one", actual.Keys );
 			}
 		}
 	}

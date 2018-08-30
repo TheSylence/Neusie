@@ -1,23 +1,21 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Neusie.Generation.Image;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
-	[TestFixture]
-	internal class StringMeasurerTests
+	public class StringMeasurerTests
 	{
-		[TestFixture]
-		internal class Measure
+		public class Measure : IDisposable
 		{
-			[SetUp]
-			public void Setup()
+			public Measure()
 			{
 				Font = new Font( FontFamily.GenericSerif, 12 );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainOneRectanglePerChar()
 			{
 				// Arrange
@@ -28,10 +26,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Measure( word, Font );
 
 				// Assert
-				Assert.AreEqual( word.Length, actual.Rectangles.Count );
+				Assert.Equal( word.Length, actual.Rectangles.Count );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldHaveOffsetThatAlignsRectToZero()
 			{
 				// Arrange
@@ -44,11 +42,11 @@ namespace Neusie.Tests.Generation.Image
 				var offset = actual.Offset;
 				var rect = actual.Rectangles.First();
 
-				Assert.AreEqual( 0, offset.X + rect.X, 0.00001f );
-				Assert.AreEqual( 0, offset.Y + rect.Y, 0.00001f );
+				Assert.Equal( 0, offset.X + rect.X, 4 );
+				Assert.Equal( 0, offset.Y + rect.Y, 4 );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldProduceRectangleBiggerThanRectSpacing()
 			{
 				// Arrange
@@ -58,11 +56,11 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Measure( ".", Font );
 
 				// Assert
-				Assert.Greater( actual.Rectangles.First().Width, 2 * StringMeasurer.RectSpacing );
-				Assert.Greater( actual.Rectangles.First().Height, 2 * StringMeasurer.RectSpacing );
+				Assert.True( actual.Rectangles.First().Width > 2 * StringMeasurer.RectSpacing );
+				Assert.True( actual.Rectangles.First().Height > 2 * StringMeasurer.RectSpacing );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldProduceSmallerRectForSmallerChar()
 			{
 				// Arrange
@@ -75,11 +73,11 @@ namespace Neusie.Tests.Generation.Image
 				var size1 = result.Rectangles.ElementAt( 0 ).Size;
 				var size2 = result.Rectangles.ElementAt( 1 ).Size;
 
-				Assert.LessOrEqual( size1.Width, size2.Width );
-				Assert.Less( size1.Height, size2.Height );
+				Assert.True( size1.Width < size2.Width );
+				Assert.True( size1.Height < size2.Height );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnEmptyCollectionForEmptyString()
 			{
 				// Arrange
@@ -89,10 +87,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Measure( string.Empty, Font );
 
 				// Assert
-				CollectionAssert.IsEmpty( actual.Rectangles );
+				Assert.Empty( actual.Rectangles );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnMeasurementWithCorrectWord()
 			{
 				// Arrange
@@ -103,16 +101,15 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Measure( expected, Font );
 
 				// Assert
-				Assert.AreEqual( expected, actual.Word );
+				Assert.Equal( expected, actual.Word );
 			}
 
-			[TearDown]
-			public void TearDown()
+			public void Dispose()
 			{
 				Font.Dispose();
 			}
 
-			private Font Font;
+			private readonly Font Font;
 		}
 	}
 }

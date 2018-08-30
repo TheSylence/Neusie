@@ -1,16 +1,14 @@
 ﻿using System;
 using Neusie.Generation;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation
 {
-	[TestFixture]
-	internal class DataTests
+	public class DataTests
 	{
-		[TestFixture]
-		internal class FileName
+		public class FileName
 		{
-			[Test]
+			[Fact]
 			public void ShouldHaveCorrectExtension()
 			{
 				// Arrange
@@ -20,7 +18,7 @@ namespace Neusie.Tests.Generation
 				var actual = sut.FileNameWrapper( "fileName" );
 
 				// Assert
-				Assert.AreEqual( "fileName.ext", actual );
+				Assert.Equal( "fileName.ext", actual );
 			}
 
 			private class TestData : BaseData

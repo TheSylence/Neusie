@@ -1,17 +1,15 @@
 ﻿using System.Drawing;
 using System.Linq;
 using Neusie.Generation.Image;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
-	[TestFixture]
-	internal class CollisionMapTests
+	public class CollisionMapTests
 	{
-		[TestFixture]
-		internal class Check
+		public class Check
 		{
-			[Test]
+			[Fact]
 			public void ShouldBePossibleWhenMapIsEmpty()
 			{
 				// Arrange
@@ -21,10 +19,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new RectangleF( 1, 1, 3, 3 ) );
 
 				// Assert
-				Assert.IsTrue( actual );
+				Assert.True( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldBePossibleWithNonOverlappingRectangle()
 			{
 				// Arrange
@@ -35,10 +33,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new RectangleF( 4, 4, 1, 1 ) );
 
 				// Assert
-				Assert.IsTrue( actual );
+				Assert.True( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForBottomBorder()
 			{
 				// Arrange
@@ -48,10 +46,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 1, 4, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForLeftBorder()
 			{
 				// Arrange
@@ -61,10 +59,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( -1, 1, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForOutOfBottomBound()
 			{
 				// Arrange
@@ -74,10 +72,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 1, 6, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForOutOfLeftBound()
 			{
 				// Arrange
@@ -87,10 +85,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( -5, 1, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForOutOfRightBound()
 			{
 				// Arrange
@@ -100,10 +98,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 6, 1, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForOutOfTopBound()
 			{
 				// Arrange
@@ -113,10 +111,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 1, -5, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForRightBorder()
 			{
 				// Arrange
@@ -126,10 +124,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 4, 1, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldCheckForTopBorder()
 			{
 				// Arrange
@@ -139,10 +137,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new Rectangle( 1, -1, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldNotBePossibleWhenCompletelyInsideExistingRect()
 			{
 				// Arrange
@@ -153,10 +151,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new RectangleF( 3, 3, 1, 1 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldNotBePossibleWhenOverlappingWithExisting()
 			{
 				// Arrange
@@ -167,14 +165,13 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Check( new RectangleF( 2, 2, 3, 3 ) );
 
 				// Assert
-				Assert.IsFalse( actual );
+				Assert.False( actual );
 			}
 		}
 
-		[TestFixture]
-		internal class Rectangles
+		public class Rectangles
 		{
-			[Test]
+			[Fact]
 			public void ShouldBeEmptyWhenNothingWasAdded()
 			{
 				// Arrange
@@ -184,10 +181,10 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Rectangles.ToList();
 
 				// Assert
-				CollectionAssert.IsEmpty( actual );
+				Assert.Empty( actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldContainAddedElements()
 			{
 				// Arrange
@@ -199,7 +196,7 @@ namespace Neusie.Tests.Generation.Image
 				var actual = sut.Rectangles.ToList();
 
 				// Assert
-				CollectionAssert.Contains( actual, expected );
+				Assert.Contains( expected, actual );
 			}
 		}
 	}

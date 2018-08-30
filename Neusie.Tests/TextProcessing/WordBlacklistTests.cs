@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class WordBlacklistTests
+	public class WordBlacklistTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
+			[Fact]
 			public void ShouldOnlyRemoveBlacklistedWords()
 			{
 				// Arrange
@@ -29,12 +27,12 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				CollectionAssert.DoesNotContain( actual.Keys, "two" );
-				CollectionAssert.Contains( actual.Keys, "one" );
-				CollectionAssert.Contains( actual.Keys, "three" );
+				Assert.DoesNotContain( "two", actual.Keys );
+				Assert.Contains( "one", actual.Keys );
+				Assert.Contains( "three", actual.Keys );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnInputListWhenBlacklistOnlyHasDifferentEntries()
 			{
 				// Arrange
@@ -52,10 +50,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( input, actual );
+				Assert.Equal( input, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldReturnInputWhenBacklistIsEmpty()
 			{
 				// Arrange
@@ -72,7 +70,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				CollectionAssert.AreEquivalent( input, actual );
+				Assert.Equal( input, actual );
 			}
 		}
 	}

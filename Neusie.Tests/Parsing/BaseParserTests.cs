@@ -1,22 +1,20 @@
 ﻿using Neusie.Parsing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
-	[TestFixture]
-	internal class BaseParserTests
+	public class BaseParserTests
 	{
-		[TestFixture]
-		internal class FilterCSharpSource
+		public class FilterCSharpSource
 		{
-			[Test]
-			[TestCase( "test.cs", true )]
-			[TestCase( "test.xaml.cs", false )]
-			[TestCase( "test.txt", false )]
-			[TestCase( "test.txt.cs", true )]
-			[TestCase( "test.g.cs", false )]
-			[TestCase( "test.g.i.cs", false )]
-			[TestCase( "test.a.b.cs", true )]
+			[Theory]
+			[InlineData( "test.cs", true )]
+			[InlineData( "test.xaml.cs", false )]
+			[InlineData( "test.txt", false )]
+			[InlineData( "test.txt.cs", true )]
+			[InlineData( "test.g.cs", false )]
+			[InlineData( "test.g.i.cs", false )]
+			[InlineData( "test.a.b.cs", true )]
 			public void ShouldFilterCorrectly( string fileName, bool expected )
 			{
 				// Arrange
@@ -26,7 +24,7 @@ namespace Neusie.Tests.Parsing
 				var actual = sut.IsCSharpSourceFileWrapper( fileName );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
 			private class BaseParserImpl : BaseParser

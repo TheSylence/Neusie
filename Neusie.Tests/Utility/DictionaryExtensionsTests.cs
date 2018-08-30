@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using Neusie.Utility;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.Utility
 {
-	[TestFixture]
-	internal class DictionaryExtensionsTests
+	public class DictionaryExtensionsTests
 	{
-		[TestFixture]
-		internal class Merge
+		public class Merge
 		{
-			[Test]
+			[Fact]
 			public void ShouldAddNewEntriesWithTheirValues()
 			{
 				// Arrange
@@ -36,10 +34,10 @@ namespace Neusie.Tests.Utility
 					{"three", 3}
 				};
 
-				CollectionAssert.AreEquivalent( expected, dict );
+				Assert.Equal( expected, dict );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldDoNothingWhenOtherIsEmpty()
 			{
 				// Arrange
@@ -54,11 +52,11 @@ namespace Neusie.Tests.Utility
 				dict.Merge( other );
 
 				// Assert
-				Assert.AreEqual( 1, dict.Count );
-				Assert.AreEqual( 1, dict["one"] );
+				Assert.Equal( 1, dict.Count );
+				Assert.Equal( 1, dict["one"] );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldIncreseValueOfExistingEntries()
 			{
 				// Arrange
@@ -75,8 +73,8 @@ namespace Neusie.Tests.Utility
 				dict.Merge( other );
 
 				// Assert
-				Assert.AreEqual( 1, dict.Count );
-				Assert.AreEqual( 3, dict["one"] );
+				Assert.Equal( 1, dict.Count );
+				Assert.Equal( 3, dict["one"] );
 			}
 		}
 	}

@@ -1,20 +1,18 @@
 ﻿using System;
 using Neusie.TextProcessing;
-using NUnit.Framework;
+using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
-	[TestFixture]
-	internal class NamespaceCleanerTests
+	public class NamespaceCleanerTests
 	{
-		[TestFixture]
-		internal class Process
+		public class Process
 		{
-			[Test]
-			[TestCase( "\t\tusing( disposable )" )]
-			[TestCase( "var namespaceName = test" )]
-			[TestCase( "Using()" )]
-			[TestCase( "Namespace()" )]
+			[Theory]
+			[InlineData( "\t\tusing( disposable )" )]
+			[InlineData( "var namespaceName = test" )]
+			[InlineData( "Using()" )]
+			[InlineData( "Namespace()" )]
 			public void ShouldLeaveInlineWordsIntact( string input )
 			{
 				// Arrange
@@ -24,10 +22,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( input, actual );
+				Assert.Equal( input, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveNamespaceDeclarationLines()
 			{
 				// Arrange
@@ -39,10 +37,10 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 
-			[Test]
+			[Fact]
 			public void ShouldRemoveUsingDirectives()
 			{
 				// Arrange
@@ -54,7 +52,7 @@ namespace Neusie.Tests.TextProcessing
 				var actual = sut.Process( input );
 
 				// Assert
-				Assert.AreEqual( expected, actual );
+				Assert.Equal( expected, actual );
 			}
 		}
 	}
