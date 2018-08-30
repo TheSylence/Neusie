@@ -4,7 +4,14 @@ using System.Linq;
 
 namespace Neusie.Generation.Image
 {
-	internal class CollisionMap
+	internal interface ICollisionMap
+	{
+		bool Check( IEnumerable<RectangleF> rects );
+		void Insert( IEnumerable<RectangleF> rects );
+		IEnumerable<RectangleF> Rectangles { get; }
+	}
+
+	internal class CollisionMap : ICollisionMap
 	{
 		public CollisionMap( int width, int height )
 		{
@@ -15,16 +22,6 @@ namespace Neusie.Generation.Image
 			_Rectangles.Add( new RectangleF( 0, 0, 1, Height ) );
 			_Rectangles.Add( new RectangleF( Width - 1, 0, 1, Height ) );
 			_Rectangles.Add( new RectangleF( 0, Height - 1, Width, 1 ) );
-		}
-
-		public bool Check( RectangleF rect )
-		{
-			return CheckBounds( rect ) && CheckCollision( rect );
-		}
-
-		public void Insert( RectangleF rect )
-		{
-			_Rectangles.Add( rect );
 		}
 
 		private bool CheckBounds( RectangleF rect )
@@ -56,13 +53,23 @@ namespace Neusie.Generation.Image
 		{
 			foreach( var exitingRectangle in _Rectangles )
 			{
-				if(exitingRectangle.IntersectsWith( rect ) )
+				if( exitingRectangle.IntersectsWith( rect ) )
 				{
 					return false;
 				}
 			}
 
 			return true;
+		}
+
+		public bool Check( IEnumerable<RectangleF> rects )
+		{
+			return rects.All( rect => CheckBounds( rect ) && CheckCollision( rect ) );
+		}
+
+		public void Insert( IEnumerable<RectangleF> rects )
+		{
+			_Rectangles.AddRange( rects );
 		}
 
 		public IEnumerable<RectangleF> Rectangles => _Rectangles.Skip( 4 );

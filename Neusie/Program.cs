@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Neusie.Generation.Csv;
+using Neusie.Generation.Image;
 using Neusie.Parsing;
 using Neusie.TextProcessing;
 using Neusie.Utility;
@@ -52,11 +54,28 @@ namespace Neusie
 
 			Console.WriteLine( "[Done]" );
 
-			Console.Write( "Writing word list to csv..." );
-			var generator = new CsvGenerator();
-			var csvData = generator.Generate( words );
 			var baseName = Path.Combine( args[0], "noiseMap" );
+
+			Console.Write( "Writing word list to csv..." );
+			var csvGenerator = new CsvGenerator();
+			var csvData = csvGenerator.Generate( words );
 			csvData.Save( baseName );
+			Console.WriteLine( "[Done]" );
+
+			Console.Write( "Generating cloud image..." );
+			var width = 1024;
+			var height = 1024;
+			var rand = new Random();
+			var fontFamily = new FontFamily( "Tahoma" );
+
+			var collisionMap = new CollisionMap( width, height );
+			var measurer = new StringMeasurer();
+			var placer = new WordPlacer( measurer, collisionMap, width, height, rand, fontFamily );
+			var imageGenerator = new ImageGenerator( placer, width, height, fontFamily );
+
+			var image = imageGenerator.Generate( words );
+			image.Save( baseName );
+
 			Console.WriteLine( "[Done]" );
 		}
 	}
