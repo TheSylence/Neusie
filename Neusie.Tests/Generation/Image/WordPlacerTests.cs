@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using JetBrains.Annotations;
 using Neusie.Generation.Image;
 using NSubstitute;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
+	[UsedImplicitly]
 	public class WordPlacerTests
 	{
 		public class Place

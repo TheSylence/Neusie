@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Neusie.Generation.Csv;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Csv
 {
+	[UsedImplicitly]
 	public class CsvGeneratorTests
 	{
 		public class Generate

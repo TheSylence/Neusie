@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Neusie.Generation.Csv;
 using Neusie.Generation.Image;
 using Neusie.Parsing;
@@ -15,7 +16,8 @@ using Neusie.Utility;
 
 namespace Neusie
 {
-	internal class Program
+	[PublicAPI]
+	public class Program
 	{
 		private static void Main( string[] args )
 		{

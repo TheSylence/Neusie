@@ -1,9 +1,11 @@
-﻿using Neusie.Parsing;
+﻿using JetBrains.Annotations;
+using Neusie.Parsing;
 using NSubstitute;
 using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
+	[UsedImplicitly]
 	public class FolderParserTests
 	{
 		public class ReadFiles

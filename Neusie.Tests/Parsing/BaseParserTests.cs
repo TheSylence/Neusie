@@ -1,8 +1,10 @@
-﻿using Neusie.Parsing;
+﻿using JetBrains.Annotations;
+using Neusie.Parsing;
 using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
+	[UsedImplicitly]
 	public class BaseParserTests
 	{
 		public class FilterCSharpSource

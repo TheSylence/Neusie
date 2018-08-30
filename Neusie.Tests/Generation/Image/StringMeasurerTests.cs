@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using JetBrains.Annotations;
 using Neusie.Generation.Image;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
+	[UsedImplicitly]
 	public class StringMeasurerTests
 	{
 		public class Measure : IDisposable

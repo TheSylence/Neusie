@@ -1,8 +1,10 @@
-﻿using Neusie.Utility;
+﻿using JetBrains.Annotations;
+using Neusie.Utility;
 using Xunit;
 
 namespace Neusie.Tests.Utility
 {
+	[UsedImplicitly]
 	public class ObjectExtensionsTests
 	{
 		public class Yield

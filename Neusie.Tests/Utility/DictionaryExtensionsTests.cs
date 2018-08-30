@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Neusie.Utility;
 using Xunit;
 
 namespace Neusie.Tests.Utility
 {
+	[UsedImplicitly]
 	public class DictionaryExtensionsTests
 	{
 		public class Merge

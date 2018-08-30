@@ -6,8 +6,8 @@ namespace Neusie.TextProcessing
 	{
 		static StringRemover()
 		{
-			var strings = @"""((\\[^\n]|[^""\n])*)""";
-			var verbatimStrings = @"@(""[^""]*"")+";
+			const string strings = @"""((\\[^\n]|[^""\n])*)""";
+			const string verbatimStrings = @"@(""[^""]*"")+";
 
 			var pattern = $"{strings}|{verbatimStrings}";
 			Pattern = new Regex( pattern, RegexOptions.Multiline | RegexOptions.Compiled );

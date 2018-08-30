@@ -12,12 +12,9 @@ namespace Neusie.Utility
 				throw new ArgumentNullException( nameof(fileName) );
 			}
 
-			if( !File.Exists( fileName ) )
-			{
-				return null;
-			}
-
-			return File.ReadAllText( fileName );
+			return File.Exists( fileName )
+				? File.ReadAllText( fileName )
+				: null;
 		}
 	}
 }

@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Neusie.Parsing;
 using Xunit;
 
 namespace Neusie.Tests.Parsing
 {
+	[UsedImplicitly]
 	public class DirectoryEnumeratorTest
 	{
 		public class Files
@@ -83,7 +85,7 @@ namespace Neusie.Tests.Parsing
 				RemoveDirectory( dir );
 			}
 
-			private string CreateDirectory( [CallerMemberName] string name = null )
+			private static string CreateDirectory( [CallerMemberName] string name = null )
 			{
 				var path = "DirectoryEnumeratorTest_" + name;
 
@@ -97,12 +99,12 @@ namespace Neusie.Tests.Parsing
 				return path;
 			}
 
-			private void RemoveDirectory( string dir )
+			private static void RemoveDirectory( string dir )
 			{
 				Directory.Delete( dir, true );
 			}
 
-			private void Touch( string dir, string file )
+			private static void Touch( string dir, string file )
 			{
 				var path = Path.Combine( dir, file );
 				Directory.CreateDirectory( dir );

@@ -1,8 +1,10 @@
-﻿using Neusie.TextProcessing;
+﻿using JetBrains.Annotations;
+using Neusie.TextProcessing;
 using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
+	[UsedImplicitly]
 	public class StringRemoverTests
 	{
 		public class Process
@@ -27,7 +29,7 @@ namespace Neusie.Tests.TextProcessing
 			{
 				// Arrange
 				const string input = "\"hello\"";
-				var expected = "";
+				const string expected = "";
 				var sut = new StringRemover();
 
 				// Act
@@ -42,7 +44,7 @@ namespace Neusie.Tests.TextProcessing
 			{
 				// Arrange
 				const string input = "@\"hello\"";
-				var expected = "";
+				const string expected = "";
 				var sut = new StringRemover();
 
 				// Act

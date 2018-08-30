@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Neusie.TextProcessing;
 using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
+	[UsedImplicitly]
 	public class WordBlacklistTests
 	{
 		public class Process

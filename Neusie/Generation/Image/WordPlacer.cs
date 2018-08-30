@@ -53,14 +53,16 @@ namespace Neusie.Generation.Image
 							newRects.Add( r );
 						}
 
-						if( Map.Check( newRects ) )
+						if( !Map.Check( newRects ) )
 						{
-							Map.Insert( newRects );
-
-							yield return new WordPlacement( word.Key, new PointF( xOffset, yOffset ), fontSize );
-							found = true;
-							break;
+							continue;
 						}
+
+						Map.Insert( newRects );
+
+						yield return new WordPlacement( word.Key, new PointF( xOffset, yOffset ), fontSize );
+						found = true;
+						break;
 					}
 
 					if( found )

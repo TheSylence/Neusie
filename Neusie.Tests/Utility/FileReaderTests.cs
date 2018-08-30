@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using JetBrains.Annotations;
 using Neusie.Utility;
 using Xunit;
 
 namespace Neusie.Tests.Utility
 {
+	[UsedImplicitly]
 	public class FileReaderTests
 	{
 		public class Read
@@ -14,7 +16,7 @@ namespace Neusie.Tests.Utility
 			{
 				// Arrange
 				var fileName = Path.GetTempFileName();
-				var expected = "hello, world";
+				const string expected = "hello, world";
 				File.WriteAllText( fileName, expected );
 
 				var sut = new FileReader();
@@ -46,10 +48,10 @@ namespace Neusie.Tests.Utility
 				var sut = new FileReader();
 
 				// Act
-				Action action = () => sut.Read( null );
+				void Action() => sut.Read( null );
 
 				// Assert
-				Assert.Throws<ArgumentNullException>( action );
+				Assert.Throws<ArgumentNullException>( (Action)Action );
 			}
 		}
 	}

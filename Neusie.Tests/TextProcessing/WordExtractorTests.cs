@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Neusie.TextProcessing;
 using NSubstitute;
 using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
+	[UsedImplicitly]
 	public class WordExtractorTests
 	{
 		public class Extract
@@ -89,7 +91,7 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldReturnEmptyDictionaryWhenInputIsEmpty()
 			{
 				// Arrange
-				var input = "";
+				const string input = "";
 				var sut = new WordExtractor();
 
 				// Act
@@ -106,16 +108,14 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldContainAllWordsFromInput()
 			{
 				// Arrange
-				var input = "one two three";
+				const string input = "one two three";
 				var expected = new Dictionary<string, int>
 				{
 					{"one", 1}, {"two", 1}, {"three", 1}
 				};
 
-				var sut = new WordExtractor();
-
 				// Act
-				var actual = sut.ExtractWithoutProcessing( input );
+				var actual = WordExtractor.ExtractWithoutProcessing( input );
 
 				// Assert
 				Assert.Equal( expected, actual );
@@ -125,16 +125,14 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldContainWordsWithCorrectFrequency()
 			{
 				// Arrange
-				var input = "one two two three three three";
+				const string input = "one two two three three three";
 				var expected = new Dictionary<string, int>
 				{
 					{"one", 1}, {"two", 2}, {"three", 3}
 				};
 
-				var sut = new WordExtractor();
-
 				// Act
-				var actual = sut.ExtractWithoutProcessing( input );
+				var actual = WordExtractor.ExtractWithoutProcessing( input );
 
 				// Assert
 				Assert.Equal( expected, actual );
@@ -144,16 +142,14 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldContainWordsWithCorrectFrequencyIgnoringCase()
 			{
 				// Arrange
-				var input = "one TWO two three thRee ThrEE";
+				const string input = "one TWO two three thRee ThrEE";
 				var expected = new Dictionary<string, int>
 				{
 					{"one", 1}, {"two", 2}, {"three", 3}
 				};
 
-				var sut = new WordExtractor();
-
 				// Act
-				var actual = sut.ExtractWithoutProcessing( input );
+				var actual = WordExtractor.ExtractWithoutProcessing( input );
 
 				// Assert
 				Assert.Equal( expected, actual );
@@ -163,16 +159,14 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldNotContainSpecialCharactersInWords()
 			{
 				// Arrange
-				var input = "#region !not nullable?";
+				const string input = "#region !not nullable?";
 				var expected = new Dictionary<string, int>
 				{
 					{"region", 1}, {"not", 1}, {"nullable", 1}
 				};
 
-				var sut = new WordExtractor();
-
 				// Act
-				var actual = sut.ExtractWithoutProcessing( input );
+				var actual = WordExtractor.ExtractWithoutProcessing( input );
 
 				// Assert
 				Assert.Equal( expected, actual );
@@ -183,11 +177,8 @@ namespace Neusie.Tests.TextProcessing
 			[InlineData( "__-- _###'" )]
 			public void ShouldRemoveDigitOnlyWords( string input )
 			{
-				// Arrange
-				var sut = new WordExtractor();
-
-				// Act
-				var actual = sut.ExtractWithoutProcessing( input );
+				// Arrange & Act
+				var actual = WordExtractor.ExtractWithoutProcessing( input );
 
 				// Assert
 				Assert.Empty( actual );
@@ -196,11 +187,8 @@ namespace Neusie.Tests.TextProcessing
 			[Fact]
 			public void ShouldReturnEmptyDictionaryWhenInputIsEmpty()
 			{
-				// Arrange
-				var sut = new WordExtractor();
-
-				// Act
-				var actual = sut.ExtractWithoutProcessing( string.Empty );
+				// Arrange & Act
+				var actual = WordExtractor.ExtractWithoutProcessing( string.Empty );
 
 				// Assert
 				Assert.Empty( actual );

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using JetBrains.Annotations;
 using Neusie.Utility;
 using Xunit;
 
 namespace Neusie.Tests.Utility
 {
+	[UsedImplicitly]
 	public class FileWriterTests
 	{
 		public class Write
@@ -16,10 +18,10 @@ namespace Neusie.Tests.Utility
 				var sut = new FileWriter();
 
 				// Act
-				Action action = () => sut.Write( null, "content" );
+				void Action() => sut.Write( null, "content" );
 
 				// Assert
-				Assert.Throws<ArgumentNullException>( action );
+				Assert.Throws<ArgumentNullException>( (Action)Action );
 			}
 
 			[Fact]
@@ -27,8 +29,8 @@ namespace Neusie.Tests.Utility
 			{
 				// Arrange
 				var sut = new FileWriter();
-				var fileName = "content.file";
-				var expected = "Hello World";
+				const string fileName = "content.file";
+				const string expected = "Hello World";
 
 				// Act
 				sut.Write( fileName, expected );
@@ -43,7 +45,7 @@ namespace Neusie.Tests.Utility
 			{
 				// Arrange
 				var sut = new FileWriter();
-				var fileName = "null.file";
+				const string fileName = "null.file";
 
 				// Act
 				sut.Write( fileName, null );

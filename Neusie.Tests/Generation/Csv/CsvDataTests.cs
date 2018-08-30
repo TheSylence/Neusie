@@ -1,9 +1,11 @@
 ﻿using System.IO;
+using JetBrains.Annotations;
 using Neusie.Generation.Csv;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Csv
 {
+	[UsedImplicitly]
 	public class CsvDataTests
 	{
 		public class Save
@@ -13,8 +15,8 @@ namespace Neusie.Tests.Generation.Csv
 			{
 				// Arrange
 				const string baseName = "fileName";
-				string fileName = "fileName.ext";
-				var expected = "hello world";
+				const string fileName = "fileName.ext";
+				const string expected = "hello world";
 				var sut = new CsvData( expected, "ext" );
 
 				// Act
@@ -32,7 +34,7 @@ namespace Neusie.Tests.Generation.Csv
 			public void ShouldContainStringData()
 			{
 				// Arrange
-				var expected = "hello world";
+				const string expected = "hello world";
 				var sut = new CsvData( expected, "ext" );
 
 				// Act

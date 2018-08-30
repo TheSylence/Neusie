@@ -1,9 +1,11 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Neusie.TextProcessing;
 using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
+	[UsedImplicitly]
 	public class CommentRemoverTests
 	{
 		public class Process
@@ -12,8 +14,8 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldNotTouchNormalText()
 			{
 				// Arrange
-				var input = "hello world";
-				var expected = "hello world";
+				const string input = "hello world";
+				const string expected = "hello world";
 
 				// Act
 				var actual = Execute( input );
@@ -27,7 +29,7 @@ namespace Neusie.Tests.TextProcessing
 			{
 				// Arrange
 				var input = "// header" + Environment.NewLine + "content";
-				var expected = "content";
+				const string expected = "content";
 
 				// Act
 				var actual = Execute( input );
@@ -40,8 +42,8 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldRemoveBlockCommentFromBeginning()
 			{
 				// Arrange
-				var input = "/* comment */ test";
-				var expected = " test";
+				const string input = "/* comment */ test";
+				const string expected = " test";
 
 				// Act
 				var actual = Execute( input );
@@ -54,8 +56,8 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldRemoveBlockCommentFromEnd()
 			{
 				// Arrange
-				var input = "test /* comment*/";
-				var expected = "test ";
+				const string input = "test /* comment*/";
+				const string expected = "test ";
 
 				// Act
 				var actual = Execute( input );
@@ -68,8 +70,8 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldRemoveBlockCommentFromMiddle()
 			{
 				// Arrange
-				var input = "pre /* comment */ post";
-				var expected = "pre  post";
+				const string input = "pre /* comment */ post";
+				const string expected = "pre  post";
 
 				// Act
 				var actual = Execute( input );
@@ -83,7 +85,7 @@ namespace Neusie.Tests.TextProcessing
 			{
 				// Arrange
 				var input = "pre /* comment" + Environment.NewLine + "comment2 */ post";
-				var expected = "pre  post";
+				const string expected = "pre  post";
 
 				// Act
 				var actual = Execute( input );
@@ -96,7 +98,7 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldRemoveSingleLineComment()
 			{
 				// Arrange
-				var input = "// comment";
+				const string input = "// comment";
 				var expected = string.Empty;
 
 				// Act
@@ -124,8 +126,8 @@ namespace Neusie.Tests.TextProcessing
 			public void ShouldSingleLineCommentFromEnd()
 			{
 				// Arrange
-				var input = "test // comment";
-				var expected = "test ";
+				const string input = "test // comment";
+				const string expected = "test ";
 
 				// Act
 				var actual = Execute( input );
@@ -134,7 +136,7 @@ namespace Neusie.Tests.TextProcessing
 				Assert.Equal( expected, actual );
 			}
 
-			private string Execute( string input )
+			private static string Execute( string input )
 			{
 				var sut = new CommentRemover();
 				return sut.Process( input );

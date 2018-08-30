@@ -1,9 +1,11 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Neusie.Generation;
 using Xunit;
 
 namespace Neusie.Tests.Generation
 {
+	[UsedImplicitly]
 	public class DataTests
 	{
 		public class FileName

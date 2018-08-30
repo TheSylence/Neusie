@@ -49,7 +49,7 @@ namespace Neusie.TextProcessing
 			return result;
 		}
 
-		internal Dictionary<string, int> ExtractWithoutProcessing( string text )
+		internal static Dictionary<string, int> ExtractWithoutProcessing( string text )
 		{
 			var words = SplitPattern.Split( text ).Where( IsWord );
 

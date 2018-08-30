@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Neusie.Tests
 {
-	public class ImageComparer : EqualityComparer<Bitmap>
+	internal class ImageComparer : EqualityComparer<Bitmap>
 	{
 		/// <inheritdoc />
 		public override bool Equals( Bitmap imgA, Bitmap imgB )

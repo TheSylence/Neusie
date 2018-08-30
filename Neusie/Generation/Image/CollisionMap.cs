@@ -8,7 +8,6 @@ namespace Neusie.Generation.Image
 	{
 		bool Check( IEnumerable<RectangleF> rects );
 		void Insert( IEnumerable<RectangleF> rects );
-		IEnumerable<RectangleF> Rectangles { get; }
 	}
 
 	internal class CollisionMap : ICollisionMap
@@ -41,12 +40,7 @@ namespace Neusie.Generation.Image
 				return false;
 			}
 
-			if( rect.Top >= Height )
-			{
-				return false;
-			}
-
-			return true;
+			return rect.Top >= Height;
 		}
 
 		private bool CheckCollision( RectangleF rect )

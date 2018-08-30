@@ -59,7 +59,7 @@ namespace Neusie.Generation.Image
 			return new StringMeasurement( word, rects, offset );
 		}
 
-		private PointF GetAlignmentOffset( List<RectangleF> rects )
+		private static PointF GetAlignmentOffset( IReadOnlyCollection<RectangleF> rects )
 		{
 			if( !rects.Any() )
 			{

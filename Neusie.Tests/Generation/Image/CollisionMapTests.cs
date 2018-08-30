@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
 using System.Linq;
+using JetBrains.Annotations;
 using Neusie.Generation.Image;
 using Neusie.Utility;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
+	[UsedImplicitly]
 	public class CollisionMapTests
 	{
 		public class Check

@@ -1,9 +1,11 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Neusie.TextProcessing;
 using Xunit;
 
 namespace Neusie.Tests.TextProcessing
 {
+	[UsedImplicitly]
 	public class NamespaceCleanerTests
 	{
 		public class Process

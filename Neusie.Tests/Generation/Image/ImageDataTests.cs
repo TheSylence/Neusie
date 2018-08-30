@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Drawing;
+using JetBrains.Annotations;
 using Neusie.Generation.Image;
 using Xunit;
 
 namespace Neusie.Tests.Generation.Image
 {
+	[UsedImplicitly]
 	public class ImageDataTests
 	{
 		public class Save
@@ -14,7 +16,7 @@ namespace Neusie.Tests.Generation.Image
 			{
 				// Arrange
 				const string baseName = "correctContent";
-				string fileName = "correctContent.png";
+				const string fileName = "correctContent.png";
 
 				using( var referenceImage = new Bitmap( 32, 32 ) )
 				{
@@ -48,7 +50,7 @@ namespace Neusie.Tests.Generation.Image
 			{
 				// Arrange
 				const string baseName = "correctSizes";
-				string fileName = "correctSizes.png";
+				const string fileName = "correctSizes.png";
 
 				using( var gdiBitmap = new Bitmap( 32, 16 ) )
 				{
