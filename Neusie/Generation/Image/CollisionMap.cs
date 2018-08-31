@@ -4,12 +4,6 @@ using System.Linq;
 
 namespace Neusie.Generation.Image
 {
-	internal interface ICollisionMap
-	{
-		bool Check( IEnumerable<RectangleF> rects );
-		void Insert( IEnumerable<RectangleF> rects );
-	}
-
 	internal class CollisionMap : ICollisionMap
 	{
 		public CollisionMap( int width, int height )

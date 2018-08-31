@@ -5,11 +5,6 @@ using System.Linq;
 
 namespace Neusie.Generation.Image
 {
-	internal interface IStringMeasurer
-	{
-		StringMeasurement Measure( string word, Font font );
-	}
-
 	internal class StringMeasurer : IStringMeasurer
 	{
 		static StringMeasurer()

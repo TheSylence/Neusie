@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using Neusie.Configuration;
 using Neusie.Generation.Csv;
 using Neusie.Generation.Image;
 using Neusie.Parsing;
@@ -21,9 +22,11 @@ namespace Neusie
 	{
 		private static void Main( string[] args )
 		{
+			var config = ConfigurationFactory.Build( args );
+
 			Console.Write( "Searching for files..." );
 			var parser = new FolderParser( new DirectoryEnumerator() );
-			var sourceFiles = parser.Files( args[0] ).ToList();
+			var sourceFiles = parser.Files( config.Input.Sources.First() ).ToList();
 			Console.WriteLine( "[Done]" );
 
 			var preProcessors = new ITextPreProcessor[]
