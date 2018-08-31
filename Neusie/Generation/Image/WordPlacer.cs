@@ -34,10 +34,9 @@ namespace Neusie.Generation.Image
 				{
 					var found = false;
 
-					for( var i = 0; i < 150; ++i )
-					{
-						var inf = Measurer.Measure( word.Key, new Font( FontFamily, fontSize ) );
-						var rects = inf.Rectangles.ToList();
+					var inf = Measurer.Measure(word.Key, new Font(FontFamily, fontSize));
+					for ( var i = 0; i < 150; ++i )
+					{var rects = inf.Rectangles.ToList();
 
 						var maxW = Math.Max( 1, Width - (int)inf.Rectangles.Max( ii => ii.Width ) );
 						var maxH = Math.Max( 1, Height - (int)inf.Rectangles.Max( ii => ii.Height ) );
