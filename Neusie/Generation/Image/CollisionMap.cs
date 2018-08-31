@@ -40,7 +40,7 @@ namespace Neusie.Generation.Image
 				return false;
 			}
 
-			return rect.Top >= Height;
+			return rect.Top < Height;
 		}
 
 		private bool CheckCollision( RectangleF rect )
