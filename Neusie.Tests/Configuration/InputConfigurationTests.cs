@@ -33,6 +33,22 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
+		public void ShouldContainShortWordFilterFromConfig()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			section["minwordlength"].Returns( "4" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.MinWordLength;
+
+			// Assert
+			Assert.Equal( 4, actual );
+		}
+
+		[Fact]
 		public void ShouldHaveAllBlacklistWordsWhenMultipleWereGiven()
 		{
 			// Arrange

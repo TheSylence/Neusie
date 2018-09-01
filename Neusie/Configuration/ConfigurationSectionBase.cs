@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Neusie.Utility;
@@ -10,6 +11,22 @@ namespace Neusie.Configuration
 		protected ConfigurationSectionBase( IConfigurationSection section )
 		{
 			Section = section;
+		}
+
+		protected int? ReadInt( string key )
+		{
+			var value = Section[key];
+			if( string.IsNullOrEmpty( value ) )
+			{
+				return null;
+			}
+
+			if( !int.TryParse( value, NumberStyles.Any, CultureInfo.InvariantCulture, out var number ) )
+			{
+				return null;
+			}
+
+			return number;
 		}
 
 		protected string ReadString( string key )

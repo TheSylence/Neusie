@@ -27,6 +27,8 @@ namespace Neusie.Configuration
 			}
 		}
 
+		public int MinWordLength => ReadInt( ConfigurationKeys.Input.MinWordLength ) ?? 0;
+
 		public IReadOnlyCollection<string> Sources => ReadStringList( ConfigurationKeys.Input.Sources );
 	}
 }

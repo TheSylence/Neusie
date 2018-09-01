@@ -40,7 +40,7 @@ namespace Neusie
 			var postProcessors = new ITextPostProcessor[]
 			{
 				new WordBlacklist( config.Input.Blacklist ),
-				new ShortWordRemover( 2 )
+				new ShortWordRemover( config.Input.MinWordLength )
 			};
 
 			var extractor = new WordExtractor( preProcessors, postProcessors );

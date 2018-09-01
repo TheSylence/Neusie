@@ -17,6 +17,7 @@ namespace Neusie.Tests.Configuration
 			// Act & Assert
 			Assert.Equal( new[] {"microsoft", "system", "var"}, sut.Input.Blacklist.OrderBy( x => x ).ToArray() );
 			Assert.Empty( sut.Input.Sources );
+			Assert.Equal( sut.Input.MinWordLength, 2 );
 		}
 
 		public class Build
