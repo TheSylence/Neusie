@@ -27,7 +27,7 @@ namespace Neusie.Configuration
 		{
 			var counter = 0;
 
-			var counterElement = ReadString( KeyName( key, counter ) );
+			var counterElement = ReadString( KeyName.SuffixWithCounter( key, counter ) );
 			if( counterElement == null )
 			{
 				var item = ReadString( key );
@@ -40,15 +40,10 @@ namespace Neusie.Configuration
 				list.Add( counterElement );
 
 				++counter;
-				counterElement = ReadString( KeyName( key, counter ) );
+				counterElement = ReadString( KeyName.SuffixWithCounter( key, counter ) );
 			}
 
 			return list;
-		}
-
-		private string KeyName( string key, int counter )
-		{
-			return $"{key}:{counter}";
 		}
 
 		private readonly IConfigurationSection Section;

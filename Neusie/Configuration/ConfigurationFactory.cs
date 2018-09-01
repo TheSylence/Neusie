@@ -43,7 +43,9 @@ namespace Neusie.Configuration
 
 		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultConfig()
 		{
-			yield break;
+			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 0 ), "microsoft" );
+			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 1 ), "system" );
+			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 2 ), "var" );
 		}
 	}
 }

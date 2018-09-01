@@ -39,7 +39,7 @@ namespace Neusie
 
 			var postProcessors = new ITextPostProcessor[]
 			{
-				new WordBlacklist( new[] {"microsoft", "system", "var"} ),
+				new WordBlacklist( config.Input.Blacklist ),
 				new ShortWordRemover( 2 )
 			};
 

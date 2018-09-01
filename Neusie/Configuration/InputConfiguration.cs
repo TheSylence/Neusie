@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 
 namespace Neusie.Configuration
@@ -8,6 +9,22 @@ namespace Neusie.Configuration
 		/// <inheritdoc />
 		public InputConfiguration( IConfigurationSection section ) : base( section )
 		{
+		}
+
+		public IReadOnlyCollection<string> Blacklist
+		{
+			get
+			{
+				var list = new List<string>( ReadStringList( ConfigurationKeys.Input.Blacklist ) );
+
+				var fileName = ReadString( ConfigurationKeys.Input.BlacklistFile );
+				if( fileName != null )
+				{
+					list.AddRange( File.ReadAllLines( fileName ) );
+				}
+
+				return list;
+			}
 		}
 
 		public IReadOnlyCollection<string> Sources => ReadStringList( ConfigurationKeys.Input.Sources );

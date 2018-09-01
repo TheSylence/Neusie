@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Neusie.Configuration;
 using NSubstitute;
@@ -8,6 +10,47 @@ namespace Neusie.Tests.Configuration
 {
 	public class InputConfigurationTests
 	{
+		[Fact]
+		public void ShouldContainCombinedBlacklist()
+		{
+			// Arrange
+			File.WriteAllText( "blacklist.file", "three" + Environment.NewLine + "four" );
+
+			var expected = new[] {"one", "two", "three", "four"};
+
+			var section = Substitute.For<IConfigurationSection>();
+			section["blacklist:0"].Returns( "one" );
+			section["blacklist:1"].Returns( "two" );
+			section["blacklistfile"].Returns( "blacklist.file" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.Blacklist;
+
+			// Assert
+			Assert.Equal( expected.OrderBy( x => x ), actual.OrderBy( x => x ) );
+		}
+
+		[Fact]
+		public void ShouldHaveAllBlacklistWordsWhenMultipleWereGiven()
+		{
+			// Arrange
+			var expected = new[] {"one", "two"};
+
+			var section = Substitute.For<IConfigurationSection>();
+			section["blacklist:0"].Returns( "one" );
+			section["blacklist:1"].Returns( "two" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.Blacklist;
+
+			// Assert
+			Assert.Equal( expected.OrderBy( x => x ), actual.OrderBy( x => x ) );
+		}
+
 		[Fact]
 		public void ShouldHaveAllSourcesWhenMultipleWereGiven()
 		{
@@ -34,6 +77,23 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
+		public void ShouldHaveSingleBlacklistEntryWhenOnlyOneWasGiven()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			section["blacklist"].Returns( "single" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.Blacklist;
+
+			// Assert
+			Assert.Single( actual, "single" );
+			Assert.Single( actual );
+		}
+
+		[Fact]
 		public void ShouldHaveSingleSourceWhenOnlyOneWasGiven()
 		{
 			// Arrange
@@ -48,6 +108,22 @@ namespace Neusie.Tests.Configuration
 			// Assert
 			Assert.Single( actual, "single" );
 			Assert.Single( actual );
+		}
+
+		[Fact]
+		public void ShouldThrowWhenBlacklistFileWasNotFound()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			section["blacklistfile"].Returns( "non.existing.file" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var ex = Record.Exception( () => sut.Blacklist );
+
+			// Assert
+			Assert.IsType<FileNotFoundException>( ex );
 		}
 	}
 }

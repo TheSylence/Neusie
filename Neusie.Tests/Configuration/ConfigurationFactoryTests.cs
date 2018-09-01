@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Configuration.Json;
 using Neusie.Configuration;
 using Xunit;
@@ -7,6 +8,33 @@ namespace Neusie.Tests.Configuration
 {
 	public class ConfigurationFactoryTests
 	{
+		[Fact]
+		public void DefaultShouldContainCorrectValues()
+		{
+			// Arrange
+			var sut = ConfigurationFactory.Build( new string[0] );
+
+			// Act & Assert
+			Assert.Equal( new[] {"microsoft", "system", "var"}, sut.Input.Blacklist.OrderBy( x => x ).ToArray() );
+			Assert.Empty( sut.Input.Sources );
+		}
+
+		public class Build
+		{
+			[Fact]
+			public void ShouldThrowWhenConfigFileWasNotFound()
+			{
+				// Arrange
+				var args = new[] {"config=file.name"};
+
+				// Act
+				var ex = Record.Exception( () => ConfigurationFactory.Build( args ) );
+
+				// Assert
+				Assert.IsType<FileNotFoundException>( ex );
+			}
+		}
+
 		public class CreateRoot
 		{
 			[Fact]
