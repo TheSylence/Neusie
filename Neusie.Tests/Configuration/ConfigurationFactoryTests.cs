@@ -18,6 +18,9 @@ namespace Neusie.Tests.Configuration
 			Assert.Equal( new[] {"microsoft", "system", "var"}, sut.Input.Blacklist.OrderBy( x => x ).ToArray() );
 			Assert.Empty( sut.Input.Sources );
 			Assert.Equal( sut.Input.MinWordLength, 2 );
+			Assert.Equal( sut.Input.KeepComments, false );
+			Assert.Equal( sut.Input.KeepStrings, false );
+			Assert.Equal( sut.Input.KeepNamespaces, false );
 		}
 
 		public class Build

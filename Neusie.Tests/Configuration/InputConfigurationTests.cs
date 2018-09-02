@@ -127,6 +127,52 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
+		public void ShouldKeepCommentsWhenSpecified()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			section["keepcomments"].Returns( "true" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.KeepComments;
+
+			// Assert
+			Assert.True( actual );
+		}
+
+		[Fact]
+		public void ShouldNotKeepCommentsWhenNotSpecified()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.KeepComments;
+
+			// Assert
+			Assert.False( actual );
+		}
+
+		[Fact]
+		public void ShouldNotKeepCommentsWhenSpecified()
+		{
+			// Arrange
+			var section = Substitute.For<IConfigurationSection>();
+			section["keepcomments"].Returns( "false" );
+
+			var sut = new InputConfiguration( section );
+
+			// Act
+			var actual = sut.KeepComments;
+
+			// Assert
+			Assert.False( actual );
+		}
+
+		[Fact]
 		public void ShouldThrowWhenBlacklistFileWasNotFound()
 		{
 			// Arrange

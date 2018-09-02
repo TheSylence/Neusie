@@ -29,13 +29,25 @@ namespace Neusie
 			var sourceFiles = parser.Files( config.Input.Sources.First() ).ToList();
 			Console.WriteLine( "[Done]" );
 
-			var preProcessors = new ITextPreProcessor[]
+			var preProcessors = new List<ITextPreProcessor>
 			{
-				new LineEndingNormalizer(),
-				new CommentRemover(),
-				new StringRemover(),
-				new NamespaceCleaner()
+				new LineEndingNormalizer()
 			};
+
+			if( !config.Input.KeepComments )
+			{
+				preProcessors.Add( new CommentRemover() );
+			}
+
+			if( !config.Input.KeepStrings )
+			{
+				preProcessors.Add( new StringRemover() );
+			}
+
+			if( !config.Input.KeepNamespaces )
+			{
+				preProcessors.Add( new NamespaceCleaner() );
+			}
 
 			var postProcessors = new ITextPostProcessor[]
 			{

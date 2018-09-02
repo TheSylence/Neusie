@@ -27,6 +27,9 @@ namespace Neusie.Configuration
 			}
 		}
 
+		public bool KeepComments => ReadBool( ConfigurationKeys.Input.KeepComments ) ?? false;
+		public bool KeepNamespaces => ReadBool( ConfigurationKeys.Input.KeepNamespaces ) ?? false;
+		public bool KeepStrings => ReadBool( ConfigurationKeys.Input.KeepStrings ) ?? false;
 		public int MinWordLength => ReadInt( ConfigurationKeys.Input.MinWordLength ) ?? 0;
 
 		public IReadOnlyCollection<string> Sources => ReadStringList( ConfigurationKeys.Input.Sources );

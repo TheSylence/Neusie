@@ -13,6 +13,22 @@ namespace Neusie.Configuration
 			Section = section;
 		}
 
+		protected bool? ReadBool( string key )
+		{
+			var value = Section[key];
+			if( string.IsNullOrEmpty( value ) )
+			{
+				return null;
+			}
+
+			if( !bool.TryParse( value, out var result ) )
+			{
+				return null;
+			}
+
+			return result;
+		}
+
 		protected int? ReadInt( string key )
 		{
 			var value = Section[key];
