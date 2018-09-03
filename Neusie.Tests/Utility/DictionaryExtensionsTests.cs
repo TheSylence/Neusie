@@ -54,7 +54,7 @@ namespace Neusie.Tests.Utility
 				dict.Merge( other );
 
 				// Assert
-				Assert.Equal( 1, dict.Count );
+				Assert.Single( dict );
 				Assert.Equal( 1, dict["one"] );
 			}
 
@@ -75,7 +75,7 @@ namespace Neusie.Tests.Utility
 				dict.Merge( other );
 
 				// Assert
-				Assert.Equal( 1, dict.Count );
+				Assert.Single( dict );
 				Assert.Equal( 3, dict["one"] );
 			}
 		}

@@ -17,10 +17,10 @@ namespace Neusie.Tests.Configuration
 			// Act & Assert
 			Assert.Equal( new[] {"microsoft", "system", "var"}, sut.Input.Blacklist.OrderBy( x => x ).ToArray() );
 			Assert.Empty( sut.Input.Sources );
-			Assert.Equal( sut.Input.MinWordLength, 2 );
-			Assert.Equal( sut.Input.KeepComments, false );
-			Assert.Equal( sut.Input.KeepStrings, false );
-			Assert.Equal( sut.Input.KeepNamespaces, false );
+			Assert.Equal( 2, sut.Input.MinWordLength );
+			Assert.False( sut.Input.KeepComments);
+			Assert.False( sut.Input.KeepStrings);
+			Assert.False( sut.Input.KeepNamespaces);
 		}
 
 		public class Build
