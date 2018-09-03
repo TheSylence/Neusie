@@ -71,7 +71,7 @@ namespace Neusie
 
 			Console.WriteLine( "[Done]" );
 
-			var baseName = Path.Combine( args[0], "noiseMap" );
+			var baseName = Path.Combine( config.Input.Sources.First(), "noiseMap" );
 
 			Console.Write( "Writing word list to csv..." );
 			var csvGenerator = new CsvGenerator();
