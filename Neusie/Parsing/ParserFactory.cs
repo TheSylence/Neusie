@@ -21,9 +21,10 @@ namespace Neusie.Parsing
 
 			case ".csproj":
 				return new ProjectParser();
-			}
 
-			throw new ArgumentException( "Source cannot be parsed" );
+			default:
+				throw new ArgumentException( "Source cannot be parsed" );
+			}
 		}
 	}
 }

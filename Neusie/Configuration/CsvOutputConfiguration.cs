@@ -2,7 +2,7 @@
 
 namespace Neusie.Configuration
 {
-	class CsvOutputConfiguration : ConfigurationSectionBase
+	internal class CsvOutputConfiguration : ConfigurationSectionBase
 	{
 		/// <inheritdoc />
 		public CsvOutputConfiguration( IConfigurationSection section ) : base( section )

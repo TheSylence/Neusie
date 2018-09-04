@@ -28,7 +28,7 @@ namespace Neusie.Tests.Parsing
 			{
 				// Arrange
 				var sut = new ParserFactory();
-				var filePath = "project.csproj";
+				const string filePath = "project.csproj";
 
 				// Act
 				var actual = sut.Construct( filePath );
@@ -42,7 +42,7 @@ namespace Neusie.Tests.Parsing
 			{
 				// Arrange
 				var sut = new ParserFactory();
-				var filePath = "solution.sln";
+				const string filePath = "solution.sln";
 
 				// Act
 				var actual = sut.Construct( filePath );

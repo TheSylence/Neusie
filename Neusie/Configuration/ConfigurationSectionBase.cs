@@ -48,12 +48,9 @@ namespace Neusie.Configuration
 		protected string ReadString( string key )
 		{
 			var value = Section[key];
-			if( string.IsNullOrEmpty( value ) )
-			{
-				return null;
-			}
-
-			return value;
+			return string.IsNullOrEmpty( value )
+				? null
+				: value;
 		}
 
 		protected IReadOnlyCollection<string> ReadStringList( string key )

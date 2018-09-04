@@ -70,7 +70,7 @@ namespace Neusie.Tests.Generation.Image
 				placer.Received( 1 ).Place( Arg.Is<IEnumerable<KeyValuePair<string, int>>>( pairs => IsOrderedWithCountOfThree( pairs ) ) );
 			}
 
-			private int CountNonBlackPixels( Bitmap img )
+			private static int CountNonBlackPixels( Bitmap img )
 			{
 				var counter = 0;
 				for( var x = 0; x < img.Width; ++x )
