@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 
 namespace Neusie.Configuration
@@ -43,10 +44,28 @@ namespace Neusie.Configuration
 
 		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultConfig()
 		{
+			foreach( var keyValuePair in GenerateDefaultInputConfig() )
+			{
+				yield return keyValuePair;
+			}
+
+			foreach( var keyValuePair in GenerateDefaultOutputConfig() )
+			{
+				yield return keyValuePair;
+			}
+		}
+
+		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultInputConfig()
+		{
 			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 0 ), "microsoft" );
 			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 1 ), "system" );
 			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 2 ), "var" );
 			yield return new KeyValuePair<string, string>( "input:minwordlength", "2" );
+		}
+
+		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultOutputConfig()
+		{
+			yield return new KeyValuePair<string, string>( "output:targetpath", Directory.GetCurrentDirectory() );
 		}
 	}
 }

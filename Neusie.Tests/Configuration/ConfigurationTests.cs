@@ -19,5 +19,18 @@ namespace Neusie.Tests.Configuration
 			// Assert
 			cfg.Received( 1 ).GetSection( ConfigurationKeys.InputSection );
 		}
+
+		[Fact]
+		public void ShouldReadOutputSection()
+		{
+			// Arrange
+			var cfg = Substitute.For<IConfiguration>();
+
+			// Act
+			var _ = new Neusie.Configuration.Configuration( cfg );
+
+			// Assert
+			cfg.Received( 1 ).GetSection( ConfigurationKeys.OutputSection );
+		}
 	}
 }
