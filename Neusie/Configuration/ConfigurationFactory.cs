@@ -66,6 +66,7 @@ namespace Neusie.Configuration
 		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultOutputConfig()
 		{
 			yield return new KeyValuePair<string, string>( "output:targetpath", Directory.GetCurrentDirectory() );
+			yield return new KeyValuePair<string, string>( "output:targetname", "noisemap" );
 		}
 	}
 }

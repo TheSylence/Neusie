@@ -9,6 +9,28 @@ namespace Neusie.Tests.Configuration
 	public class ConfigurationFactoryTests
 	{
 		[Fact]
+		public void DefaultShouldContainCorrectCsvValues()
+		{
+			// Arrange
+			var configuration = ConfigurationFactory.Build( new string[0] );
+			var sut = configuration.Output.Csv;
+
+			// Act & Assert
+			Assert.True( sut.IsEnabled );
+		}
+
+		[Fact]
+		public void DefaultShouldContainCorrectImageValues()
+		{
+			// Arrange
+			var configuration = ConfigurationFactory.Build( new string[0] );
+			var sut = configuration.Output.Image;
+
+			// Act & Assert
+			Assert.True( sut.IsEnabled );
+		}
+
+		[Fact]
 		public void DefaultShouldContainCorrectInputValues()
 		{
 			// Arrange
@@ -33,6 +55,7 @@ namespace Neusie.Tests.Configuration
 
 			// Act & Assert
 			Assert.Equal( Directory.GetCurrentDirectory(), sut.TargetPath );
+			Assert.Equal( "noisemap", sut.TargetName );
 		}
 
 		public class Build

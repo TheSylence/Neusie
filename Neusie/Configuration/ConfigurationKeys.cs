@@ -2,8 +2,24 @@
 {
 	internal static class ConfigurationKeys
 	{
+		internal const string CsvOutputSection = "csv";
+		internal const string ImageOutputSection = "image";
 		internal const string InputSection = "input";
 		internal const string OutputSection = "output";
+
+		internal static class CsvOutput
+		{
+			internal const string Enabled = "enable";
+		}
+
+		internal static class ImageOutput
+		{
+			internal const string Enabled = "enable";
+			internal const string Font = "font";
+			internal const string Height = "height";
+
+			internal const string Width = "width";
+		}
 
 		internal static class Input
 		{
@@ -18,7 +34,9 @@
 
 		internal static class Output
 		{
+			internal const string Seed = "seed";
 			internal const string TargetPath = "targetpath";
+			internal const string TargetName = "targetname";
 		}
 	}
 }

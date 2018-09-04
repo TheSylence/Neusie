@@ -1,14 +1,22 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Neusie.Configuration
 {
-	class OutputConfiguration : ConfigurationSectionBase
+	internal class OutputConfiguration : ConfigurationSectionBase
 	{
 		/// <inheritdoc />
 		public OutputConfiguration( IConfigurationSection section ) : base( section )
 		{
+			Csv = new CsvOutputConfiguration( section.GetSection( ConfigurationKeys.CsvOutputSection ) );
+			Image = new ImageOutputConfiguration( section.GetSection( ConfigurationKeys.ImageOutputSection ) );
 		}
 
-		public string TargetPath => ReadString(ConfigurationKeys.Output.TargetPath);
+		public CsvOutputConfiguration Csv { get; }
+		public ImageOutputConfiguration Image { get; }
+
+		public int Seed => ReadInt( ConfigurationKeys.Output.Seed ) ?? new Random().Next();
+		public string TargetName => ReadString( ConfigurationKeys.Output.TargetName );
+		public string TargetPath => ReadString( ConfigurationKeys.Output.TargetPath );
 	}
 }
