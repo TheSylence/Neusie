@@ -81,7 +81,10 @@ namespace Neusie
 
 			var collisionMap = new CollisionMap( width, height );
 			var measurer = new StringMeasurer();
-			var placer = new WordPlacer( measurer, collisionMap, width, height, rand, fontFamily );
+
+			var minimumFontSize = config.MinimumFontSize;
+			var compactness = config.Compactness;
+			var placer = new WordPlacer( measurer, collisionMap, width, height, rand, fontFamily, minimumFontSize, compactness );
 			var imageGenerator = new ImageGenerator( placer, width, height, fontFamily );
 
 			var image = imageGenerator.Generate( words );

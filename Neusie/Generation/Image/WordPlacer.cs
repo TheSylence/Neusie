@@ -7,7 +7,8 @@ namespace Neusie.Generation.Image
 {
 	internal class WordPlacer : IWordPlacer
 	{
-		public WordPlacer( IStringMeasurer measurer, ICollisionMap map, int width, int height, Random rand, FontFamily fontFamily )
+		public WordPlacer( IStringMeasurer measurer, ICollisionMap map, int width, int height, Random rand, FontFamily fontFamily,
+			int minimumFontSize, int compactness )
 		{
 			Measurer = measurer;
 			Map = map;
@@ -15,6 +16,8 @@ namespace Neusie.Generation.Image
 			Height = height;
 			Rand = rand;
 			FontFamily = fontFamily;
+			MinimumFontSize = minimumFontSize;
+			Compactness = compactness;
 		}
 
 		public IEnumerable<WordPlacement> Place( IEnumerable<KeyValuePair<string, int>> words )
@@ -25,12 +28,12 @@ namespace Neusie.Generation.Image
 			{
 				fontSize = (int)Math.Min( fontSize, 100 * Math.Log10( word.Value + 100 ) );
 
-				while( fontSize > 10 )
+				while( fontSize >= MinimumFontSize )
 				{
 					var found = false;
 
 					var inf = Measurer.Measure( word.Key, new Font( FontFamily, fontSize ) );
-					for( var i = 0; i < 250; ++i )
+					for( var i = 0; i < Compactness; ++i )
 					{
 						var rects = inf.Rectangles.ToList();
 
@@ -70,11 +73,14 @@ namespace Neusie.Generation.Image
 			}
 		}
 
+		private readonly int Compactness;
+
 		private readonly FontFamily FontFamily;
 		private readonly int Height;
 		private readonly ICollisionMap Map;
 
 		private readonly IStringMeasurer Measurer;
+		private readonly int MinimumFontSize;
 		private readonly Random Rand;
 		private readonly int Width;
 	}

@@ -34,7 +34,7 @@ namespace Neusie.Tests.Generation.Image
 				measurer.Measure( Arg.Any<string>(), Arg.Any<Font>() )
 					.Returns( inf => new StringMeasurement( inf.ArgAt<string>( 0 ), new []{ RectangleF.Empty}, PointF.Empty ) );
 
-				var sut = new WordPlacer( measurer, map, 100, 100, rand, FontFamily.GenericMonospace );
+				var sut = new WordPlacer( measurer, map, 100, 100, rand, FontFamily.GenericMonospace, 10, 250 );
 
 				// Act
 				var actual = sut.Place( words ).ToList();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
@@ -96,6 +97,7 @@ namespace Neusie.Configuration
 		{
 			yield return new KeyValuePair<string, string>( "output:targetpath", Directory.GetCurrentDirectory() );
 			yield return new KeyValuePair<string, string>( "output:targetname", "noisemap" );
+			yield return new KeyValuePair<string, string>( "output:seed", new Random().Next().ToString() );
 		}
 	}
 }
