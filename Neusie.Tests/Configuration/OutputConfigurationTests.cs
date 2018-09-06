@@ -58,22 +58,6 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
-		public void ShouldHaveRandomSeedWhenNoneIsSpecified()
-		{
-			// Arrange
-			var section = Substitute.For<IConfigurationSection>();
-
-			var sut = new OutputConfiguration( section );
-
-			// Act
-			var seed1 = sut.Seed;
-			var seed2 = sut.Seed;
-
-			// Assert
-			Assert.NotEqual( seed1, seed2 );
-		}
-
-		[Fact]
 		public void ShouldReadCsvSection()
 		{
 			// Arrange

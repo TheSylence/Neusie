@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Neusie.Configuration
 {
@@ -15,7 +14,7 @@ namespace Neusie.Configuration
 		public CsvOutputConfiguration Csv { get; }
 		public ImageOutputConfiguration Image { get; }
 
-		public int Seed => ReadInt( ConfigurationKeys.Output.Seed ) ?? new Random().Next();
+		public int Seed => ReadInt( ConfigurationKeys.Output.Seed );
 		public string TargetName => ReadString( ConfigurationKeys.Output.TargetName );
 		public string TargetPath => ReadString( ConfigurationKeys.Output.TargetPath );
 	}

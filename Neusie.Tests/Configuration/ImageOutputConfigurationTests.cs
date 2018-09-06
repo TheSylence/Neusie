@@ -24,66 +24,35 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
-		public void ShouldBeEnabledByDefault()
+		public void ShouldHaveCorrectCompactness()
 		{
 			// Arrange
 			var section = Substitute.For<IConfigurationSection>();
+			section[ConfigurationKeys.ImageOutput.Compactness].Returns( "123" );
 
 			var sut = new ImageOutputConfiguration( section );
 
 			// Act
-			var actual = sut.IsEnabled;
+			var actual = sut.Compactness;
 
 			// Assert
-			Assert.True( actual );
+			Assert.Equal( 123, actual );
 		}
-
+		
 		[Fact]
-		public void ShouldHaveCorrectFontFamilyWhenNoneIsGiven()
+		public void ShouldHaveCorrectMinimumFontSize()
 		{
 			// Arrange
 			var section = Substitute.For<IConfigurationSection>();
+			section[ConfigurationKeys.ImageOutput.MinimumFontSize].Returns( "12" );
 
 			var sut = new ImageOutputConfiguration( section );
 
 			// Act
-			var actual = sut.Font;
+			var actual = sut.MinimumFontSize;
 
 			// Assert
-			const string expected = "Tahoma";
-			Assert.Equal( expected, actual );
-		}
-
-		[Fact]
-		public void ShouldHaveCorrectHeightWhenNoneIsGiven()
-		{
-			// Arrange
-			var section = Substitute.For<IConfigurationSection>();
-
-			var sut = new ImageOutputConfiguration( section );
-
-			// Act
-			var actual = sut.Height;
-
-			// Assert
-			const int expected = 1024;
-			Assert.Equal( expected, actual );
-		}
-
-		[Fact]
-		public void ShouldHaveCorrectWidthWhenNoneIsGiven()
-		{
-			// Arrange
-			var section = Substitute.For<IConfigurationSection>();
-
-			var sut = new ImageOutputConfiguration( section );
-
-			// Act
-			var actual = sut.Width;
-
-			// Assert
-			const int expected = 1024;
-			Assert.Equal( expected, actual );
+			Assert.Equal( 12, actual );
 		}
 
 		[Fact]

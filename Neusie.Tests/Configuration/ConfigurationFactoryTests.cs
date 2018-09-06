@@ -28,6 +28,11 @@ namespace Neusie.Tests.Configuration
 
 			// Act & Assert
 			Assert.True( sut.IsEnabled );
+			Assert.Equal( 10, sut.MinimumFontSize );
+			Assert.Equal( 250, sut.Compactness );
+			Assert.Equal( 1024, sut.Height );
+			Assert.Equal( 1024, sut.Width );
+			Assert.Equal( "Tahoma", sut.Font );
 		}
 
 		[Fact]

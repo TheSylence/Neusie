@@ -53,6 +53,31 @@ namespace Neusie.Configuration
 			{
 				yield return keyValuePair;
 			}
+
+			foreach( var keyValuePair in GenerateDefaultCsvOutputConfig() )
+			{
+				yield return keyValuePair;
+			}
+
+			foreach( var keyValuePair in GenerateDefaultImageOutputConfig() )
+			{
+				yield return keyValuePair;
+			}
+		}
+
+		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultCsvOutputConfig()
+		{
+			yield return new KeyValuePair<string, string>( "output:csv:enable", "true" );
+		}
+
+		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultImageOutputConfig()
+		{
+			yield return new KeyValuePair<string, string>( "output:image:enable", "true" );
+			yield return new KeyValuePair<string, string>( "output:image:width", "1024" );
+			yield return new KeyValuePair<string, string>( "output:image:height", "1024" );
+			yield return new KeyValuePair<string, string>( "output:image:font", "Tahoma" );
+			yield return new KeyValuePair<string, string>( "output:image:minimumfontsize", "10" );
+			yield return new KeyValuePair<string, string>( "output:image:compactness", "250" );
 		}
 
 		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultInputConfig()
@@ -61,6 +86,10 @@ namespace Neusie.Configuration
 			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 1 ), "system" );
 			yield return new KeyValuePair<string, string>( KeyName.SuffixWithCounter( "input:blacklist", 2 ), "var" );
 			yield return new KeyValuePair<string, string>( "input:minwordlength", "2" );
+			yield return new KeyValuePair<string, string>( "input:keepcomments", "false" );
+			yield return new KeyValuePair<string, string>( "input:keepstrings", "false" );
+			yield return new KeyValuePair<string, string>( "input:keepnamespaces", "false" );
+			yield return new KeyValuePair<string, string>( "input:sources", "" );
 		}
 
 		private static IEnumerable<KeyValuePair<string, string>> GenerateDefaultOutputConfig()

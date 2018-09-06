@@ -17,9 +17,9 @@ namespace Neusie.Configuration
 			{
 				var list = new List<string>( ReadStringList( ConfigurationKeys.Input.Blacklist ) );
 
-				var fileName = ReadString( ConfigurationKeys.Input.BlacklistFile );
-				if( fileName != null )
+				if( HasKey( ConfigurationKeys.Input.BlacklistFile ) )
 				{
+					var fileName = ReadString( ConfigurationKeys.Input.BlacklistFile );
 					list.AddRange( File.ReadAllLines( fileName ) );
 				}
 
@@ -27,11 +27,22 @@ namespace Neusie.Configuration
 			}
 		}
 
-		public bool KeepComments => ReadBool( ConfigurationKeys.Input.KeepComments ) ?? false;
-		public bool KeepNamespaces => ReadBool( ConfigurationKeys.Input.KeepNamespaces ) ?? false;
-		public bool KeepStrings => ReadBool( ConfigurationKeys.Input.KeepStrings ) ?? false;
-		public int MinWordLength => ReadInt( ConfigurationKeys.Input.MinWordLength ) ?? 0;
+		public bool KeepComments => ReadBool( ConfigurationKeys.Input.KeepComments );
+		public bool KeepNamespaces => ReadBool( ConfigurationKeys.Input.KeepNamespaces );
+		public bool KeepStrings => ReadBool( ConfigurationKeys.Input.KeepStrings );
+		public int MinWordLength => ReadInt( ConfigurationKeys.Input.MinWordLength );
 
-		public IReadOnlyCollection<string> Sources => ReadStringList( ConfigurationKeys.Input.Sources );
+		public IReadOnlyCollection<string> Sources
+		{
+			get
+			{
+				if( TryReadStringList( ConfigurationKeys.Input.Sources, out var list ) )
+				{
+					return list;
+				}
+
+				return new string[0];
+			}
+		}
 	}
 }

@@ -9,13 +9,11 @@ namespace Neusie.Configuration
 		{
 		}
 
-		private const string DefaultFont = "Tahoma";
-		private const int DefaultHeight = 1024;
-		private const int DefaultWidth = 1024;
-
-		public string Font => ReadString( ConfigurationKeys.ImageOutput.Font ) ?? DefaultFont;
-		public int Height => ReadInt( ConfigurationKeys.ImageOutput.Height ) ?? DefaultHeight;
-		public bool IsEnabled => ReadBool( ConfigurationKeys.ImageOutput.Enabled ) ?? true;
-		public int Width => ReadInt( ConfigurationKeys.ImageOutput.Width ) ?? DefaultWidth;
+		public int Compactness => ReadInt( ConfigurationKeys.ImageOutput.Compactness );
+		public string Font => ReadString( ConfigurationKeys.ImageOutput.Font );
+		public int Height => ReadInt( ConfigurationKeys.ImageOutput.Height );
+		public bool IsEnabled => ReadBool( ConfigurationKeys.ImageOutput.Enabled );
+		public int MinimumFontSize => ReadInt( ConfigurationKeys.ImageOutput.MinimumFontSize );
+		public int Width => ReadInt( ConfigurationKeys.ImageOutput.Width );
 	}
 }

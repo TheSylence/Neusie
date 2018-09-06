@@ -22,20 +22,5 @@ namespace Neusie.Tests.Configuration
 			// Assert
 			Assert.False( actual );
 		}
-
-		[Fact]
-		public void ShouldBeEnabledByDefault()
-		{
-			// Arrange
-			var section = Substitute.For<IConfigurationSection>();
-
-			var sut = new CsvOutputConfiguration( section );
-
-			// Act
-			var actual = sut.IsEnabled;
-
-			// Assert
-			Assert.True( actual );
-		}
 	}
 }

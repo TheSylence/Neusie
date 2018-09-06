@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Neusie.Configuration;
 using NSubstitute;
 using Xunit;
@@ -30,7 +32,7 @@ namespace Neusie.Tests.Configuration
 			}
 
 			[Fact]
-			public void ShouldReturnNullWhenValueCannotBeParsed()
+			public void ShouldThrowWhenValueCannotBeParsed()
 			{
 				// Arrange
 				const string key = "key";
@@ -41,24 +43,24 @@ namespace Neusie.Tests.Configuration
 				var sut = new SectionBaseWrapper( section );
 
 				// Act
-				var actual = sut.ReadBoolWrapper( key );
+				var ex = Record.Exception( () => sut.ReadBoolWrapper( key ) );
 
 				// Assert
-				Assert.Null( actual );
+				Assert.IsType<FormatException>( ex );
 			}
 
 			[Fact]
-			public void ShouldReturnNullWhenValueWasNotSet()
+			public void ShouldThrowWhenValueWasNotSet()
 			{
 				// Arrange
 				var section = Substitute.For<IConfigurationSection>();
 				var sut = new SectionBaseWrapper( section );
 
 				// Act
-				var actual = sut.ReadBoolWrapper( "non.existing" );
+				var ex = Record.Exception( () => sut.ReadBoolWrapper( "non.existing" ) );
 
 				// Assert
-				Assert.Null( actual );
+				Assert.IsType<KeyNotFoundException>( ex );
 			}
 		}
 
@@ -79,26 +81,25 @@ namespace Neusie.Tests.Configuration
 				var actual = sut.ReadIntWrapper( key );
 
 				// Assert
-				Assert.True( actual.HasValue );
-				Assert.Equal( expected, actual.Value );
+				Assert.Equal( expected, actual );
 			}
 
 			[Fact]
-			public void ShouldReturnNullWhenKeyWasNotFound()
+			public void ShouldThrowWhenKeyWasNotFound()
 			{
 				// Arrange
 				var section = Substitute.For<IConfigurationSection>();
 				var sut = new SectionBaseWrapper( section );
 
 				// Act
-				var actual = sut.ReadIntWrapper( "non.existing" );
+				var ex = Record.Exception( () => sut.ReadIntWrapper( "non.existing" ) );
 
 				// Assert
-				Assert.Null( actual );
+				Assert.IsType<KeyNotFoundException>( ex );
 			}
 
 			[Fact]
-			public void ShouldReturnNullWhenValueCannotBeParsed()
+			public void ShouldThrowWhenValueCannotBeParsed()
 			{
 				// Arrange
 				const string key = "key";
@@ -108,10 +109,10 @@ namespace Neusie.Tests.Configuration
 				var sut = new SectionBaseWrapper( section );
 
 				// Act
-				var actual = sut.ReadIntWrapper( key );
+				var ex = Record.Exception( () => sut.ReadIntWrapper( key ) );
 
 				// Assert
-				Assert.Null( actual );
+				Assert.IsType<FormatException>( ex );
 			}
 		}
 
@@ -136,17 +137,17 @@ namespace Neusie.Tests.Configuration
 			}
 
 			[Fact]
-			public void ShouldReturnNullWhenKeyWasNotFound()
+			public void ShouldThrowWhenKeyWasNotFound()
 			{
 				// Arrange
 				var section = Substitute.For<IConfigurationSection>();
 				var sut = new SectionBaseWrapper( section );
 
 				// Act
-				var actual = sut.ReadStringWrapper( "non.existing" );
+				var ex = Record.Exception( () => sut.ReadStringWrapper( "non.existing" ) );
 
 				// Assert
-				Assert.Null( actual );
+				Assert.IsType<KeyNotFoundException>( ex );
 			}
 		}
 
@@ -157,7 +158,12 @@ namespace Neusie.Tests.Configuration
 			{
 			}
 
-			public int? ReadIntWrapper( string key )
+			public bool ReadBoolWrapper( string key )
+			{
+				return ReadBool( key );
+			}
+
+			public int ReadIntWrapper( string key )
 			{
 				return ReadInt( key );
 			}
@@ -165,11 +171,6 @@ namespace Neusie.Tests.Configuration
 			public string ReadStringWrapper( string key )
 			{
 				return ReadString( key );
-			}
-
-			public bool? ReadBoolWrapper( string key)
-			{
-				return ReadBool(key);
 			}
 		}
 	}

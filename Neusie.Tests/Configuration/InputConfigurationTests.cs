@@ -143,20 +143,6 @@ namespace Neusie.Tests.Configuration
 		}
 
 		[Fact]
-		public void ShouldNotKeepCommentsWhenNotSpecified()
-		{
-			// Arrange
-			var section = Substitute.For<IConfigurationSection>();
-			var sut = new InputConfiguration( section );
-
-			// Act
-			var actual = sut.KeepComments;
-
-			// Assert
-			Assert.False( actual );
-		}
-
-		[Fact]
 		public void ShouldNotKeepCommentsWhenSpecified()
 		{
 			// Arrange
@@ -177,6 +163,7 @@ namespace Neusie.Tests.Configuration
 		{
 			// Arrange
 			var section = Substitute.For<IConfigurationSection>();
+			section["blacklist:0"].Returns("ignored");
 			section["blacklistfile"].Returns( "non.existing.file" );
 
 			var sut = new InputConfiguration( section );

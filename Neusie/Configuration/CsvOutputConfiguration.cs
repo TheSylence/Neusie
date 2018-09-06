@@ -9,6 +9,6 @@ namespace Neusie.Configuration
 		{
 		}
 
-		public bool IsEnabled => ReadBool(ConfigurationKeys.CsvOutput.Enabled) ?? true;
+		public bool IsEnabled => ReadBool(ConfigurationKeys.CsvOutput.Enabled);
 	}
 }

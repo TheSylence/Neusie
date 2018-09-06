@@ -14,10 +14,11 @@
 
 		internal static class ImageOutput
 		{
+			internal const string Compactness = "compactness";
 			internal const string Enabled = "enable";
 			internal const string Font = "font";
 			internal const string Height = "height";
-
+			internal const string MinimumFontSize = "minimumfontsize";
 			internal const string Width = "width";
 		}
 
@@ -35,8 +36,8 @@
 		internal static class Output
 		{
 			internal const string Seed = "seed";
-			internal const string TargetPath = "targetpath";
 			internal const string TargetName = "targetname";
+			internal const string TargetPath = "targetpath";
 		}
 	}
 }
