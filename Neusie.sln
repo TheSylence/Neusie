@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neusie", "Neusie\Neusie.csproj", "{ABFE34BF-BFFA-418B-B902-13FFEDDE76E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neusie", "Neusie\Neusie.csproj", "{ABFE34BF-BFFA-418B-B902-13FFEDDE76E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neusie.Tests", "Neusie.Tests\Neusie.Tests.csproj", "{53962444-B635-4D29-B301-881BC4E5178D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{498B56F7-D125-447F-B85C-C8ED30261C96}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
