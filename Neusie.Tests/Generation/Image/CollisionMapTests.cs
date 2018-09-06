@@ -208,7 +208,7 @@ namespace Neusie.Tests.Generation.Image
 				// Arrange
 				var sut = new CollisionMap( 1, 1 );
 				var expected1 = new RectangleF( 1, 1, 1, 1 );
-				var expected2 = new RectangleF( 1, 1, 1, 1 );
+				var expected2 = new RectangleF( 2, 2, 1, 1 );
 				sut.Insert( new[] {expected1, expected2} );
 
 				// Act

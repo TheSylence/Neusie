@@ -25,12 +25,12 @@ namespace Neusie.Generation.Image
 			{
 				fontSize = (int)Math.Min( fontSize, 100 * Math.Log10( word.Value + 100 ) );
 
-				while( fontSize > 5 )
+				while( fontSize > 10 )
 				{
 					var found = false;
 
 					var inf = Measurer.Measure( word.Key, new Font( FontFamily, fontSize ) );
-					for( var i = 0; i < 150; ++i )
+					for( var i = 0; i < 250; ++i )
 					{
 						var rects = inf.Rectangles.ToList();
 

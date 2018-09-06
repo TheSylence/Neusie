@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using QuadTrees;
+using QuadTrees.QTreePointF;
+using QuadTrees.Wrappers;
 
 namespace Neusie.Generation.Image
 {
@@ -11,35 +14,57 @@ namespace Neusie.Generation.Image
 			Width = width;
 			Height = height;
 
-			_Rectangles.Add( new RectangleF( 0, 0, Width, 1 ) );
-			_Rectangles.Add( new RectangleF( 0, 0, 1, Height ) );
-			_Rectangles.Add( new RectangleF( Width - 1, 0, 1, Height ) );
-			_Rectangles.Add( new RectangleF( 0, Height - 1, Width, 1 ) );
+			PointTree = new QuadTreePointF<PointEntry>( 0, 0, Width, Height );
+			RectTree = new QuadTreeRectF<QuadTreeRectFWrapper>( 0, 0, Width, Height );
 		}
 
 		private bool CheckBounds( RectangleF rect )
 		{
-			if( rect.Right >= Width )
+			if( rect.Right >= Width || rect.Left >= Width )
 			{
 				return false;
 			}
 
-			if( rect.Left <= 0 )
+			if( rect.Left <= 0 || rect.Right <= 0 )
 			{
 				return false;
 			}
 
-			if( rect.Bottom <= 0 )
+			if( rect.Bottom <= 0 || rect.Top <= 0 )
 			{
 				return false;
 			}
 
-			return rect.Top < Height;
+			if( rect.Bottom >= Height || rect.Top >= Height )
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		private bool CheckCollision( RectangleF rect )
 		{
-			foreach( var exitingRectangle in _Rectangles )
+			rect.Inflate( 1, 1 );
+
+			var rectangles = PointTree.GetObjects( rect ).Select( r => r.Rect );
+			if( !CheckCollision( rect, rectangles ) )
+			{
+				return false;
+			}
+
+			rectangles = RectTree.GetObjects( rect ).Select( r => r.Rect );
+			if( !CheckCollision( rect, rectangles ) )
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		private static bool CheckCollision( RectangleF rect, IEnumerable<RectangleF> rectangles )
+		{
+			foreach( var exitingRectangle in rectangles )
 			{
 				if( exitingRectangle.IntersectsWith( rect ) )
 				{
@@ -50,6 +75,14 @@ namespace Neusie.Generation.Image
 			return true;
 		}
 
+		private IEnumerable<PointEntry> GetEdgePoints( RectangleF rect )
+		{
+			yield return new PointEntry( rect, new PointF( rect.Left, rect.Top ) );
+			yield return new PointEntry( rect, new PointF( rect.Right, rect.Top ) );
+			yield return new PointEntry( rect, new PointF( rect.Left, rect.Bottom ) );
+			yield return new PointEntry( rect, new PointF( rect.Right, rect.Bottom ) );
+		}
+
 		public bool Check( IEnumerable<RectangleF> rects )
 		{
 			return rects.All( rect => CheckBounds( rect ) && CheckCollision( rect ) );
@@ -57,14 +90,31 @@ namespace Neusie.Generation.Image
 
 		public void Insert( IEnumerable<RectangleF> rects )
 		{
-			_Rectangles.AddRange( rects );
+			var rectList = rects.ToList();
+			PointTree.AddRange( rectList.SelectMany( GetEdgePoints ) );
+			RectTree.AddRange( rectList.Select( r => new QuadTreeRectFWrapper( r ) ) );
 		}
 
-		public IEnumerable<RectangleF> Rectangles => _Rectangles.Skip( 4 );
-
-		private readonly List<RectangleF> _Rectangles = new List<RectangleF>();
+		public IEnumerable<RectangleF> Rectangles => PointTree.GetAllObjects().Select( o => o.Rect ).Distinct();
 
 		private readonly int Height;
+
+		private readonly QuadTreePointF<PointEntry> PointTree;
+		private readonly QuadTreeRectF<QuadTreeRectFWrapper> RectTree;
 		private readonly int Width;
+
+		private class PointEntry : IPointFQuadStorable
+		{
+			public PointEntry( RectangleF rect, PointF point )
+			{
+				Rect = rect;
+				Point = point;
+			}
+
+			/// <inheritdoc />
+			public PointF Point { get; }
+
+			public RectangleF Rect { get; }
+		}
 	}
 }
