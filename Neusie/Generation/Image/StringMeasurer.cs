@@ -20,15 +20,15 @@ namespace Neusie.Generation.Image
 			WhiteColor = Color.White.ToArgb() & ColorMask;
 		}
 
-		private static bool CheckBlock( int bx, int by, Bitmap image )
+		private static bool CheckBlock( int bx, int by, Bitmap image, int imageWidth, int imageHeight )
 		{
-			for( var x = 0; x < BlockSize && x < image.Width; ++x )
+			for( var x = 0; x < BlockSize && x < imageWidth; ++x )
 			{
-				for( var y = 0; y < BlockSize && y < image.Height; ++y )
+				for( var y = 0; y < BlockSize && y < imageHeight; ++y )
 				{
 					var xx = bx + x;
 					var yy = by + y;
-					if( xx >= image.Width || yy >= image.Height )
+					if( xx >= imageWidth || yy >= imageHeight )
 					{
 						continue;
 					}
@@ -50,23 +50,24 @@ namespace Neusie.Generation.Image
 			var h = Math.Max( (int)bounds.Height, BlockSize );
 			var w = Math.Max( (int)bounds.Width, BlockSize );
 
-			using ( var image = new Bitmap( w, h ) )
+			using( var image = new Bitmap( w, h ) )
 			{
 				using( var gfx = Graphics.FromImage( image ) )
 				{
-					gfx.Clear( Color.Black );
-
 					var m = new Matrix();
 					m.Translate( -bounds.X + 1, -bounds.Y + 1 );
 					path.Transform( m );
 					gfx.FillPath( new SolidBrush( Color.White ), path );
 				}
 
+				var imageWidth = image.Width;
+				var imageHeight = image.Height;
+
 				for( var bx = 0; bx < w; bx += BlockSize )
 				{
 					for( var by = 0; by < h; by += BlockSize )
 					{
-						if( CheckBlock( bx, by, image ) )
+						if( CheckBlock( bx, by, image, imageWidth, imageHeight ) )
 						{
 							yield return new RectangleF( bx + offset.X, by + offset.Y, BlockSize, BlockSize );
 						}

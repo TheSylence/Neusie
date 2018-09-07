@@ -1,16 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Neusie.TextProcessing
 {
 	internal class WordExtractor
 	{
-		static WordExtractor()
-		{
-			SplitPattern = new Regex( "\\W", RegexOptions.Compiled );
-		}
-
 		public WordExtractor()
 			: this( Enumerable.Empty<ITextPreProcessor>(), Enumerable.Empty<ITextPostProcessor>() )
 		{
@@ -51,7 +45,7 @@ namespace Neusie.TextProcessing
 
 		internal static Dictionary<string, int> ExtractWithoutProcessing( string text )
 		{
-			var words = SplitPattern.Split( text ).Where( IsWord );
+			var words = Split( text ).Where( IsWord );
 
 			return words.GroupBy( x => x.ToLower() ).ToDictionary( x => x.Key, x => x.Count() );
 		}
@@ -61,7 +55,36 @@ namespace Neusie.TextProcessing
 			return str.Any( char.IsLetter );
 		}
 
-		private static readonly Regex SplitPattern;
+		private static IEnumerable<string> Split( string text )
+		{
+			var buffer = new List<char>();
+
+			foreach( var c in text )
+			{
+				if( char.IsPunctuation( c ) )
+				{
+					continue;
+				}
+
+				if( char.IsWhiteSpace( c ) )
+				{
+					if( buffer.Count > 0 )
+					{
+						yield return new string( buffer.ToArray() );
+						buffer.Clear();
+					}
+
+					continue;
+				}
+
+				buffer.Add( c );
+			}
+
+			if( buffer.Count > 0 )
+			{
+				yield return new string( buffer.ToArray() );
+			}
+		}
 
 		private readonly List<ITextPostProcessor> PostProcessors;
 		private readonly List<ITextPreProcessor> PreProcessors;
