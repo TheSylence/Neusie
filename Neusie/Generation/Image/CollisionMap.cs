@@ -15,7 +15,6 @@ namespace Neusie.Generation.Image
 			Height = height;
 
 			PointTree = new QuadTreePointF<PointEntry>( 0, 0, Width, Height );
-			RectTree = new QuadTreeRectF<QuadTreeRectFWrapper>( 0, 0, Width, Height );
 		}
 
 		private bool CheckBounds( RectangleF rect )
@@ -48,12 +47,6 @@ namespace Neusie.Generation.Image
 			rect.Inflate( 1, 1 );
 
 			var rectangles = PointTree.GetObjects( rect ).Select( r => r.Rect );
-			if( !CheckCollision( rect, rectangles ) )
-			{
-				return false;
-			}
-
-			rectangles = RectTree.GetObjects( rect ).Select( r => r.Rect );
 			if( !CheckCollision( rect, rectangles ) )
 			{
 				return false;
@@ -92,7 +85,6 @@ namespace Neusie.Generation.Image
 		{
 			var rectList = rects.ToList();
 			PointTree.AddRange( rectList.SelectMany( GetEdgePoints ) );
-			RectTree.AddRange( rectList.Select( r => new QuadTreeRectFWrapper( r ) ) );
 		}
 
 		public IEnumerable<RectangleF> Rectangles => PointTree.GetAllObjects().Select( o => o.Rect ).Distinct();
@@ -100,7 +92,6 @@ namespace Neusie.Generation.Image
 		private readonly int Height;
 
 		private readonly QuadTreePointF<PointEntry> PointTree;
-		private readonly QuadTreeRectF<QuadTreeRectFWrapper> RectTree;
 		private readonly int Width;
 
 		private class PointEntry : IPointFQuadStorable

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -15,6 +16,76 @@ namespace Neusie.Generation.Image
 				Alignment = StringAlignment.Near,
 				LineAlignment = StringAlignment.Center
 			};
+
+			WhiteColor = Color.White.ToArgb() & ColorMask;
+		}
+
+		private static bool CheckBlock( int bx, int by, Bitmap image )
+		{
+			for( var x = 0; x < BlockSize && x < image.Width; ++x )
+			{
+				for( var y = 0; y < BlockSize && y < image.Height; ++y )
+				{
+					var xx = bx + x;
+					var yy = by + y;
+					if( xx >= image.Width || yy >= image.Height )
+					{
+						continue;
+					}
+
+					var pixel = image.GetPixel( xx, yy );
+					if( ( pixel.ToArgb() & ColorMask ) == WhiteColor )
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		private static IEnumerable<RectangleF> ComputeBoundingRectangles( GraphicsPath path, PointF offset )
+		{
+			var bounds = path.GetBounds();
+			var h = Math.Max( (int)bounds.Height, BlockSize );
+			var w = Math.Max( (int)bounds.Width, BlockSize );
+
+			using ( var image = new Bitmap( w, h ) )
+			{
+				using( var gfx = Graphics.FromImage( image ) )
+				{
+					gfx.Clear( Color.Black );
+
+					var m = new Matrix();
+					m.Translate( -bounds.X + 1, -bounds.Y + 1 );
+					path.Transform( m );
+					gfx.FillPath( new SolidBrush( Color.White ), path );
+				}
+
+				for( var bx = 0; bx < w; bx += BlockSize )
+				{
+					for( var by = 0; by < h; by += BlockSize )
+					{
+						if( CheckBlock( bx, by, image ) )
+						{
+							yield return new RectangleF( bx + offset.X, by + offset.Y, BlockSize, BlockSize );
+						}
+					}
+				}
+			}
+		}
+
+		private static PointF GetAlignmentOffset( IReadOnlyCollection<RectangleF> rects )
+		{
+			if( !rects.Any() )
+			{
+				return PointF.Empty;
+			}
+
+			var xOffset = rects.Min( r => r.X );
+			var yOffset = rects.Min( r => r.Y );
+
+			return new PointF( -xOffset, -yOffset );
 		}
 
 		public StringMeasurement Measure( string word, Font font )
@@ -46,7 +117,7 @@ namespace Neusie.Generation.Image
 					bound.Offset( -RectSpacing + rightOffset, -RectSpacing );
 					bound.Inflate( 2 * RectSpacing, 2 * RectSpacing );
 
-					rects.Add( bound );
+					rects.AddRange( ComputeBoundingRectangles( path, bound.Location ) );
 				}
 			}
 
@@ -54,21 +125,13 @@ namespace Neusie.Generation.Image
 			return new StringMeasurement( word, rects, offset );
 		}
 
-		private static PointF GetAlignmentOffset( IReadOnlyCollection<RectangleF> rects )
-		{
-			if( !rects.Any() )
-			{
-				return PointF.Empty;
-			}
-
-			var xOffset = rects.Min( r => r.X );
-			var yOffset = rects.Min( r => r.Y );
-
-			return new PointF( -xOffset, -yOffset );
-		}
-
 		internal const float RectSpacing = 0f;
 
+		private const int BlockSize = 12;
+
+		private const int ColorMask = 0x00FFFFFF;
+
 		internal static readonly StringFormat StringFormat;
+		private static readonly int WhiteColor;
 	}
 }

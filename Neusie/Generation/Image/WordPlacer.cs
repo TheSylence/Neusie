@@ -36,6 +36,10 @@ namespace Neusie.Generation.Image
 					for( var i = 0; i < Compactness; ++i )
 					{
 						var rects = inf.Rectangles.ToList();
+						if( !rects.Any() )
+						{
+							continue;
+						}
 
 						var maxW = Math.Max( 1, Width - (int)inf.Rectangles.Max( ii => ii.Width ) );
 						var maxH = Math.Max( 1, Height - (int)inf.Rectangles.Max( ii => ii.Height ) );
@@ -43,7 +47,7 @@ namespace Neusie.Generation.Image
 						var xOffset = inf.Offset.X + Rand.Next( 1, maxW );
 						var yOffset = inf.Offset.Y + Rand.Next( 1, maxH );
 
-						var newRects = new List<RectangleF>( rects.Count );
+						var newRects = new HashSet<RectangleF>( rects.Count );
 
 						foreach( var r in rects )
 						{

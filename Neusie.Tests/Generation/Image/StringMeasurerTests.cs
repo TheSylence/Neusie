@@ -63,7 +63,7 @@ namespace Neusie.Tests.Generation.Image
 			}
 
 			[Fact]
-			public void ShouldProduceSmallerRectForSmallerChar()
+			public void ShouldProduceRectanglesWithSameSize()
 			{
 				// Arrange
 				var sut = new StringMeasurer();
@@ -72,11 +72,8 @@ namespace Neusie.Tests.Generation.Image
 				var result = sut.Measure( "xX", Font );
 
 				// Assert
-				var size1 = result.Rectangles.ElementAt( 0 ).Size;
-				var size2 = result.Rectangles.ElementAt( 1 ).Size;
-
-				Assert.True( size1.Width < size2.Width );
-				Assert.True( size1.Height < size2.Height );
+				var distinctSizes = result.Rectangles.Select( r => Tuple.Create( r.Width, r.Height ) ).Distinct().ToList();
+				Assert.Single( distinctSizes );
 			}
 
 			[Fact]

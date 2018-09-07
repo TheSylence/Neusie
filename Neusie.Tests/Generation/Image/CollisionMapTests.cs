@@ -144,20 +144,6 @@ namespace Neusie.Tests.Generation.Image
 			}
 
 			[Fact]
-			public void ShouldNotBePossibleWhenCompletelyInsideExistingRect()
-			{
-				// Arrange
-				var sut = new CollisionMap( 10, 10 );
-				sut.Insert( new RectangleF( 1, 1, 7, 7 ).Yield() );
-
-				// Act
-				var actual = sut.Check( new RectangleF( 3, 3, 1, 1 ).Yield() );
-
-				// Assert
-				Assert.False( actual );
-			}
-
-			[Fact]
 			public void ShouldNotBePossibleWhenOverlappingWithExisting()
 			{
 				// Arrange
