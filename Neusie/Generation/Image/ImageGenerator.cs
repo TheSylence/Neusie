@@ -25,17 +25,21 @@ namespace Neusie.Generation.Image
 		{
 			ColorMap.AddRange( new[]
 			{
-				Color.Green,
+				Color.DarkSeaGreen,
 				Color.CornflowerBlue,
 				Color.Gray,
 				Color.IndianRed,
 				Color.Orange,
 				Color.YellowGreen,
 				Color.CadetBlue,
-				Color.Beige,
-				Color.RosyBrown,
 				Color.SandyBrown,
-				Color.DarkKhaki
+				Color.DarkKhaki,
+				Color.Crimson,
+				Color.DarkMagenta,
+				Color.MediumTurquoise,
+				Color.Silver,
+				Color.MediumPurple,
+				Color.DodgerBlue
 			} );
 		}
 
@@ -54,7 +58,7 @@ namespace Neusie.Generation.Image
 				gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 				gfx.SmoothingMode = SmoothingMode.AntiAlias;
 
-				gfx.Clear( Color.Black );
+				gfx.Clear( Color.White );
 
 				foreach( var wordPlacement in placements )
 				{
