@@ -108,7 +108,7 @@ namespace Neusie
 			var words = new Dictionary<string, int>();
 
 			var sourceFileContents = sourceFiles.Select( sourceFile => fileReader.Read( sourceFile ) );
-			var sourceFileWords = sourceFileContents.Select( text => extractor.Extract( text ) );
+			var sourceFileWords = sourceFileContents.AsParallel().Select( text => extractor.Extract( text ) );
 
 			Console.Write( $"Extracting words from {sourceFiles.Count} source files..." );
 			foreach( var wordsInFile in sourceFileWords )

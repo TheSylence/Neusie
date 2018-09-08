@@ -36,13 +36,13 @@ namespace Neusie.Generation.Image
 					for( var i = 0; i < Compactness; ++i )
 					{
 						var rects = inf.Rectangles.ToList();
-						if( !rects.Any() )
+						if(rects.Count == 0 )
 						{
 							continue;
 						}
 
-						var maxW = Math.Max( 1, Width - (int)inf.Rectangles.Max( ii => ii.Width ) );
-						var maxH = Math.Max( 1, Height - (int)inf.Rectangles.Max( ii => ii.Height ) );
+						var maxW = Math.Max( 1, Width - (int)rects.Max( ii => ii.Width ) );
+						var maxH = Math.Max( 1, Height - (int)rects.Max( ii => ii.Height ) );
 
 						var xOffset = inf.Offset.X + Rand.Next( 1, maxW );
 						var yOffset = inf.Offset.Y + Rand.Next( 1, maxH );

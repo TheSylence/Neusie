@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Neusie.Generation.Image
 {
@@ -16,11 +18,9 @@ namespace Neusie.Generation.Image
 				Alignment = StringAlignment.Near,
 				LineAlignment = StringAlignment.Center
 			};
-
-			WhiteColor = Color.White.ToArgb() & ColorMask;
 		}
 
-		private static bool CheckBlock( int bx, int by, Bitmap image, int imageWidth, int imageHeight )
+		private static bool CheckBlock( int bx, int by, byte[] image, int imageWidth, int imageHeight )
 		{
 			for( var x = 0; x < BlockSize && x < imageWidth; ++x )
 			{
@@ -33,8 +33,8 @@ namespace Neusie.Generation.Image
 						continue;
 					}
 
-					var pixel = image.GetPixel( xx, yy );
-					if( ( pixel.ToArgb() & ColorMask ) == WhiteColor )
+					var idx = ( yy * imageWidth + xx ) * 4;
+					if( image[idx] != 0 )
 					{
 						return true;
 					}
@@ -63,11 +63,17 @@ namespace Neusie.Generation.Image
 				var imageWidth = image.Width;
 				var imageHeight = image.Height;
 
+				var bitmapData = image.LockBits( new Rectangle( 0, 0, imageWidth, imageHeight ), ImageLockMode.ReadOnly, image.PixelFormat );
+				var ptr = bitmapData.Scan0;
+				var numBytes = bitmapData.Stride * imageHeight;
+				var bytes = new byte[numBytes];
+				Marshal.Copy( ptr, bytes, 0, numBytes );
+
 				for( var bx = 0; bx < w; bx += BlockSize )
 				{
 					for( var by = 0; by < h; by += BlockSize )
 					{
-						if( CheckBlock( bx, by, image, imageWidth, imageHeight ) )
+						if( CheckBlock( bx, by, bytes, imageWidth, imageHeight ) )
 						{
 							yield return new RectangleF( bx + offset.X, by + offset.Y, BlockSize, BlockSize );
 						}
@@ -130,9 +136,6 @@ namespace Neusie.Generation.Image
 
 		private const int BlockSize = 12;
 
-		private const int ColorMask = 0x00FFFFFF;
-
 		internal static readonly StringFormat StringFormat;
-		private static readonly int WhiteColor;
 	}
 }

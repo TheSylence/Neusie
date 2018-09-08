@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using QuadTrees;
 using QuadTrees.QTreePointF;
-using QuadTrees.Wrappers;
 
 namespace Neusie.Generation.Image
 {
